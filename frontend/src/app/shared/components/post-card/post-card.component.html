@@ -1,0 +1,19 @@
+<div class="flex flex-col w-80 bg-gray-200 p-5 h-full">
+  <img [src]="post.mainPhotoUrl" alt="" />
+  <div class="flex flex-col gap-2">
+    <div class="text-3xl font-semibold pt-3">
+      {{ post.title }}
+    </div>
+    <div>
+      {{
+        post.description.length > 50
+          ? post.description.slice(0, 50) + "..."
+          : post.description
+      }}
+    </div>
+    <div class="flex flex-row items-center w-full">
+      <a href="" class="text-black no-underline pr-2">Read more</a>
+      <i class="pi pi-arrow-right text-sm" style="font-size: 0.8rem"></i>
+    </div>
+  </div>
+</div>

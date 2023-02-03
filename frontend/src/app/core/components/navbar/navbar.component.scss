@@ -1,0 +1,11 @@
+.activeLink{
+  @apply font-semibold;
+}
+
+.menuItem {
+  @apply hover:text-gray-600 cursor-pointer py-4;
+}
+
+.menuItemActive {
+  @apply font-semibold underline underline-offset-1;
+}

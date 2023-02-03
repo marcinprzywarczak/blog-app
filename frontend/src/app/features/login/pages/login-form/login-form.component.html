@@ -1,0 +1,67 @@
+<div class="w-full h-full flex items-center justify-center">
+  <form
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()"
+    class="w-full max-w-xl flex flex-col gap-8"
+  >
+    <div *ngIf="serverErrorMessage" class="text-red-600 font-semibold">
+      {{ serverErrorMessage }}
+    </div>
+    <div class="w-full flex flex-col gap-2">
+      <span class="p-float-label">
+        <input
+          class="w-full"
+          type="text"
+          id="login"
+          pInputText
+          formControlName="login"
+        />
+        <label for="login">Login</label>
+      </span>
+      <div
+        *ngIf="
+          submitted ||
+          form.controls['login'].touched ||
+          form.controls['login'].dirty
+        "
+        class="text-red-600 font-semibold"
+      >
+        <div *ngIf="form.controls['login'].errors?.['required']">
+          Email is required!
+        </div>
+        <div *ngIf="form.controls['login'].errors?.['email']">
+          Email is incorrect!
+        </div>
+      </div>
+    </div>
+    <div class="w-full flex flex-col gap-2">
+      <span class="p-float-label">
+        <input
+          class="w-full"
+          id="password"
+          type="password"
+          pPassword
+          formControlName="password"
+          [feedback]="false"
+        />
+        <label for="password">Password</label>
+      </span>
+      <div
+        *ngIf="
+          submitted ||
+          form.controls['password'].touched ||
+          form.controls['password'].dirty
+        "
+        class="text-red-600 font-semibold"
+      >
+        <div *ngIf="form.controls['password'].errors?.['required']">
+          Password is required!
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full">
+      <button class="w-full" pButton label="Login" [loading]="loading"></button>
+    </div>
+  </form>
+</div>

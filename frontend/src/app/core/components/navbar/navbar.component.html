@@ -1,0 +1,78 @@
+<div class="w-full bg-gray-100 px-2 md:px-20">
+  <div class="flex flex-row justify-between">
+    <div class="flex flex-row gap-x-4 items-center justify-center">
+      <div
+        class="menuItem"
+        routerLink="/lists"
+        routerLinkActive="menuItemActive"
+      >
+        Dashboard
+      </div>
+      <div
+        class="menuItem"
+        routerLink="/users"
+        routerLinkActive="menuItemActive"
+      >
+        All posts
+      </div>
+      <div
+        class="menuItem"
+        routerLink="/allLists"
+        routerLinkActive="menuItemActive"
+      >
+        Categories
+      </div>
+    </div>
+    <div *ngIf="isLogged; else loginButtons">
+      <div
+        appClickOutside
+        (clickOutside)="userDropdown = false"
+        (click)="userDropdown = !userDropdown"
+        class="relative w-full cursor-pointer"
+      >
+        <div
+          class="flex flex-row items-center cursor-pointer hover:text-gray-600 px-2 py-4"
+        >
+          <p-avatar
+            [image]="user.avatarUrl"
+            shape="circle"
+            class="pr-2"
+          ></p-avatar>
+          <div class="pr-2">{{ user.email }}</div>
+          <i class="pi pi-angle-down text-center align-middle"></i>
+        </div>
+        <div
+          [@dropDownMenu]="userDropdown"
+          *ngIf="userDropdown"
+          class="max-w-full min-w-max w-full z-50 overflow-visible absolute bg-gray-200 cursor-pointer right-0 flex flex-col"
+        >
+          <div
+            class="py-4 px-2 hover:text-gray-600 menu-item"
+            (click)="logout()"
+          >
+            <div class="flex items-center justify-between">
+              Logout
+              <i class="pi pi-arrow-right"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #loginButtons>
+  <div class="flex flex-row gap-x-4">
+    <a
+      class="underline underline-offset-2 menuItem"
+      routerLink="/login"
+      routerLinkActive="activeLink"
+      >Login</a
+    >
+    <a
+      class="underline underline-offset-2 menuItem"
+      routerLink="/register"
+      routerLinkActive="activeLink"
+      >Register</a
+    >
+  </div>
+</ng-template>
