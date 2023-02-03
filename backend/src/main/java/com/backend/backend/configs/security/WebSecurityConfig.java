@@ -71,6 +71,9 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests().requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/api/test/**").permitAll()
                 .requestMatchers("/api/photo/**").permitAll()
+                .requestMatchers("/api/category/**").permitAll()
+                .requestMatchers("/api/post/**").permitAll()
+                .requestMatchers("/api/comment/**").permitAll()
                 .anyRequest().authenticated().and();
 
         http.authenticationProvider(authenticationProvider());

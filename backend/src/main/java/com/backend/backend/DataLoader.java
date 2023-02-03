@@ -1,7 +1,9 @@
 package com.backend.backend;
 
+import com.backend.backend.models.Category;
 import com.backend.backend.models.Role;
 import com.backend.backend.models.User;
+import com.backend.backend.repositories.CategoryRepository;
 import com.backend.backend.repositories.RoleRepository;
 import com.backend.backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,24 +26,29 @@ public class DataLoader implements ApplicationRunner {
 
     private UserRepository userRepository;
 
-    private RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
+    private final CategoryRepository categoryRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public DataLoader(UserRepository userRepository, RoleRepository roleRepository) {
+    public DataLoader(UserRepository userRepository, RoleRepository roleRepository, CategoryRepository categoryRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     //add admin user if not already exists
     public void run(ApplicationArguments args) {
         this.addRoles();
+        this.addCategories();
         if(userRepository.findByEmail("admin@test.com") != null)
             return;
         String avatar = this.serverUrl + "api/photo/default_avatar.png";
         User user = new User();
         user.setName("admin");
+        user.setAvatarUrl(avatar);
+        user.setAvatarName("default_avatar.png");
         user.setPassword(passwordEncoder.encode(password));
         user.setEmail("admin@test.com");
         Set<Role> roles = new HashSet<>();
@@ -63,6 +70,18 @@ public class DataLoader implements ApplicationRunner {
             Role addRole = new Role();
             addRole.setName("ROLE_USER");
             this.roleRepository.save(addRole);
+        }
+    }
+
+    public void addCategories() {
+        String[] categories = {"travels", "finances", "technologies", "cooking", "programming", "mechanization", "health&fitness", "fashion", "DIY", "photography"};
+        for (String category:categories){
+            if(this.categoryRepository.findByName(category).isEmpty())
+            {
+                Category category1 = new Category();
+                category1.setName(category);
+                this.categoryRepository.save(category1);
+            }
         }
     }
 }

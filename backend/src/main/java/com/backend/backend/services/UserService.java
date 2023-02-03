@@ -53,10 +53,12 @@ public class UserService {
                     + userDto.getEmail());
         }
         String avatar;
+        String fileName;
         if(userDto.getAvatar() != null) {
-            String fileName = storageService.save(userDto.getAvatar());
+            fileName = storageService.save(userDto.getAvatar());
             avatar = this.serverUrl + "api/photo/" + fileName;
         } else {
+            fileName = "default_avatar.png";
             avatar = this.serverUrl + "api/photo/default_avatar.png";
         }
 
@@ -67,6 +69,7 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setEmail(userDto.getEmail());
         user.setAvatarUrl(avatar);
+        user.setAvatarName(fileName);
         Set<Role> roles = new HashSet<>();
         Role userRole = roleRepository.findByName("ROLE_USER").orElseThrow(() -> new RuntimeException("Error: Role not found"));
         roles.add(userRole);

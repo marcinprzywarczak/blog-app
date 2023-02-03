@@ -17,12 +17,11 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/test")
-public class ApiController {
+public class ApiTestController {
 
     @Autowired
     FilesStorageService storageService;
@@ -48,7 +47,7 @@ public class ApiController {
         List<FileInfo> fileInfos = storageService.loadAll().map(path -> {
             String filename = path.getFileName().toString();
             String url = MvcUriComponentsBuilder
-                    .fromMethodName(ApiController.class, "getFile", path.getFileName().toString()).build().toString();
+                    .fromMethodName(ApiTestController.class, "getFile", path.getFileName().toString()).build().toString();
 
             return new FileInfo(filename, url);
         }).collect(Collectors.toList());

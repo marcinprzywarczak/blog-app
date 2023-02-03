@@ -4,6 +4,7 @@ import com.backend.backend.configs.security.jwt.JwtUtils;
 import com.backend.backend.configs.security.services.UserDetailsImpl;
 import com.backend.backend.dto.LoginDto;
 import com.backend.backend.dto.RegisterUserDto;
+import com.backend.backend.exceptions.UserNotFoundException;
 import com.backend.backend.models.User;
 import com.backend.backend.payload.MessageResponse;
 import com.backend.backend.payload.UserInfoResponse;
@@ -63,11 +64,10 @@ public class AuthController {
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
+        User user = this.userRepository.findById(userDetails.getId()).orElseThrow(() -> new UserNotFoundException("User not found"));
+
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-                .body(new UserInfoResponse(userDetails.getId(),
-                        userDetails.getName(),
-                        userDetails.getEmail(),
-                        roles));
+                .body(user);
 
     }
 

@@ -1,5 +1,6 @@
 package com.backend.backend.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -14,11 +15,14 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private long id;
+
+    @Column(nullable = false)
     private String name;
 
     @Column(unique = true, nullable = false)
     private String email;
 
+    @Column(nullable = false)
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -28,7 +32,19 @@ public class User {
     @OrderBy(value = "id")
     private Set<Role> roles = new HashSet<>();
 
+    @OneToMany(mappedBy = "user")
+    @JsonBackReference
+    private Set<Post> posts = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    @JsonBackReference
+    private Set<Comment> comments = new HashSet<>();
+
+    @Column(nullable = false)
     private String avatarUrl;
+
+    @Column(nullable = false)
+    private String avatarName;
 
     public long getId() {
         return id;
@@ -77,5 +93,29 @@ public class User {
 
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
+    }
+
+    public String getAvatarName() {
+        return avatarName;
+    }
+
+    public void setAvatarName(String avatarName) {
+        this.avatarName = avatarName;
+    }
+
+    public Set<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(Set<Post> posts) {
+        this.posts = posts;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
     }
 }
