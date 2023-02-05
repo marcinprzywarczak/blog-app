@@ -9,17 +9,12 @@
   font-family: 'Roboto', sans-serif;
 }
 
-div[ng-view]{
-  height: 100%;
-}
+
 
 html, body {
-  min-height:100vh;
-  height: auto;
   margin: 0;
 }
-
-p{
+p {
   margin: 0;
 }
 
@@ -30,3 +25,4 @@ p{
   border-style: solid;
   border-color: theme('borderColor.DEFAULT');
 }
+

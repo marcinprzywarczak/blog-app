@@ -40,6 +40,11 @@ public class User {
     @JsonBackReference
     private Set<Comment> comments = new HashSet<>();
 
+
+    @OneToMany(mappedBy = "user")
+    @JsonBackReference
+    private Set<Like> likes = new HashSet<>();
+
     @Column(nullable = false)
     private String avatarUrl;
 
@@ -117,5 +122,29 @@ public class User {
 
     public void setComments(Set<Comment> comments) {
         this.comments = comments;
+    }
+
+    public Set<Like> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Set<Like> likes) {
+        this.likes = likes;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                ", posts=" + posts +
+                ", comments=" + comments +
+                ", likes=" + likes +
+                ", avatarUrl='" + avatarUrl + '\'' +
+                ", avatarName='" + avatarName + '\'' +
+                '}';
     }
 }

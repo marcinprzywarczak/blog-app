@@ -1,27 +1,30 @@
 <div class="w-full bg-gray-100 px-2 md:px-20">
   <div class="flex flex-row justify-between">
     <div class="flex flex-row gap-x-4 items-center justify-center">
-      <div
+      <a
         class="menuItem"
-        routerLink="/lists"
+        routerLink="/"
         routerLinkActive="menuItemActive"
+        [routerLinkActiveOptions]="{ exact: true }"
       >
         Dashboard
-      </div>
-      <div
+      </a>
+      <a
         class="menuItem"
-        routerLink="/users"
+        routerLink="/posts"
         routerLinkActive="menuItemActive"
+        [routerLinkActiveOptions]="{ exact: true }"
       >
         All posts
-      </div>
-      <div
+      </a>
+      <a
         class="menuItem"
-        routerLink="/allLists"
+        routerLink="/posts/categories"
         routerLinkActive="menuItemActive"
+        [routerLinkActiveOptions]="{ exact: true }"
       >
         Categories
-      </div>
+      </a>
     </div>
     <div *ngIf="isLogged; else loginButtons">
       <div
@@ -46,6 +49,11 @@
           *ngIf="userDropdown"
           class="max-w-full min-w-max w-full z-50 overflow-visible absolute bg-gray-200 cursor-pointer right-0 flex flex-col"
         >
+          <a
+            class="py-4 px-2 hover:text-gray-600 menu-item text-black no-underline"
+            routerLink="user/addNewPost"
+            >Add new post</a
+          >
           <div
             class="py-4 px-2 hover:text-gray-600 menu-item"
             (click)="logout()"

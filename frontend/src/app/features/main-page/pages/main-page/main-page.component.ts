@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PostService } from '../../../../core/services/post.service';
 import { Post } from '../../../../core/models/post';
 import { CategoryWithPosts } from '../../../../core/models/category-with-posts';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-main-page',
@@ -11,10 +12,12 @@ import { CategoryWithPosts } from '../../../../core/models/category-with-posts';
 export class MainPageComponent implements OnInit {
   posts: Post[];
   responsiveOptions: any;
+  placeholder = [1, 2, 3];
+  dataLoaded = false;
   mostPopularCategoriesWithPosts: CategoryWithPosts[];
   constructor(private postService: PostService) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.responsiveOptions = [
       {
         breakpoint: '1060px',
@@ -27,23 +30,21 @@ export class MainPageComponent implements OnInit {
         numScroll: 1,
       },
     ];
-    this.postService.getAllPosts({ first: 1, rows: 5 }).subscribe({
-      next: (res) => {
-        console.log(res);
-        this.posts = res.content;
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-    this.postService.getMostPopularCategoriesWithPosts().subscribe({
-      next: (res) => {
-        console.log(res);
-        this.mostPopularCategoriesWithPosts = res;
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    await new Promise((f) => setTimeout(f, 2000));
+    this.postService
+      .getMostPopularCategoriesWithPosts()
+      .pipe(finalize(() => (this.dataLoaded = true)))
+      .subscribe({
+        next: (res) => {
+          this.mostPopularCategoriesWithPosts = res;
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+  }
+
+  trackByFn(index: any, item: any) {
+    return index;
   }
 }

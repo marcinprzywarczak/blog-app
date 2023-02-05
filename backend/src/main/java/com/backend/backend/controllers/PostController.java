@@ -25,10 +25,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import javax.swing.text.html.Option;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/post")
@@ -46,7 +44,6 @@ public class PostController {
     @Autowired
     CategoryRepository categoryRepository;
 
-    @PreAuthorize("isAuthenticated()")
     @PostMapping
     public Page<Post> getAll(@RequestBody @Valid PaginationDto paginationDto){
         int page = paginationDto.getFirst() / paginationDto.getRows();
@@ -61,7 +58,6 @@ public class PostController {
         return this.postService.addNewPost(user, newPostDto, mainPhoto, photos);
     }
 
-    @PreAuthorize("isAuthenticated()")
     @PostMapping("/categories")
     public Page<Post> getPostsByCategories(@RequestBody @Valid PostByCategoriesDto postByCategoriesDto) {
         int page = postByCategoriesDto.getFirst() / postByCategoriesDto.getRows();
@@ -79,5 +75,16 @@ public class PostController {
         User user = this.userRepository.findById(postByUserDto.getUserId()).orElseThrow(() -> new UserNotFoundException("User not found"));
         return ResponseEntity.ok()
                 .body(this.postRepository.findAllByUser(user, pageable));
+    }
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getPost(@PathVariable long id) {
+        Optional<Post> post = this.postRepository.findById(id);
+        if(post.isPresent()){
+            return ResponseEntity.ok().body(post.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

@@ -21,8 +21,6 @@ public class Comment {
     @Column(nullable = false)
     private String description;
 
-    @Column(nullable = false)
-    private int rate;
 
     @Column(nullable = false)
     private long likes;
@@ -68,13 +66,6 @@ public class Comment {
         this.description = description;
     }
 
-    public int getRate() {
-        return rate;
-    }
-
-    public void setRate(int rate) {
-        this.rate = rate;
-    }
 
     public long getLikes() {
         return likes;

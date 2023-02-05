@@ -8,8 +8,6 @@ public class NewCommentDto {
     private String title;
     @NotBlank
     private String description;
-    @NotNull
-    private int rate;
 
     public String getTitle() {
         return title;
@@ -27,11 +25,4 @@ public class NewCommentDto {
         this.description = description;
     }
 
-    public int getRate() {
-        return rate;
-    }
-
-    public void setRate(int rate) {
-        this.rate = rate;
-    }
 }

@@ -8,6 +8,10 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { httpInterceptorProviders } from './core/interceptors/http-request.interceptor';
 import { CoreModule } from './core/core.module';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { httpAuthInterceptor } from './core/interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,8 +22,10 @@ import { CoreModule } from './core/core.module';
     InputNumberModule,
     HttpClientModule,
     CoreModule,
+    ToastModule,
+    FontAwesomeModule,
   ],
-  providers: [httpInterceptorProviders],
+  providers: [httpInterceptorProviders, httpAuthInterceptor, MessageService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

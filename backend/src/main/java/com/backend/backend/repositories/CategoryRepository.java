@@ -21,4 +21,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     Page<Category> findAll(Pageable pageable);
 
+    @Query(value = "select c from Category c join c.posts p group by (c) order by count(c) desc")
+    Page<Category> findAllOrderByPostsCountDesc(Pageable pageable);
+
 }

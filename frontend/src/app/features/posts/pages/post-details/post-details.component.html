@@ -1,0 +1,18 @@
+<div class="w-full h-full py-20" *ngIf="post">
+  <div class="w-full h-full max-w-5xl flex flex-col gap-8 mx-auto text-justify">
+    <div>{{ post.user.email }}</div>
+    <div>{{ post.id }}</div>
+    <div>{{ post.title }}</div>
+    <div>{{ post.description }}</div>
+    <div>{{ post.content }}</div>
+
+    <div class="flex flex-col gap-8">
+      <app-comment-form
+        class="pt-10 md:px-32 px-5"
+        [postId]="post.id"
+      ></app-comment-form>
+
+      <app-comments class="px-5" [postId]="post.id"></app-comments>
+    </div>
+  </div>
+</div>

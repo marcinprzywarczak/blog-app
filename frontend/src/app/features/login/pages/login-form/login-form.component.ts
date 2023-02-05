@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../../core/services/auth.service';
 import { LoginForm } from '../../../../core/models/login-form';
 import { finalize } from 'rxjs';
+import { AlertService } from '../../../../core/services/alert.service';
 
 @Component({
   selector: 'app-login-form',
@@ -16,7 +17,8 @@ export class LoginFormComponent implements OnInit {
   serverErrorMessage: string;
   constructor(
     private authService: AuthService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private alertService: AlertService
   ) {}
 
   ngOnInit() {
@@ -43,13 +45,14 @@ export class LoginFormComponent implements OnInit {
         next: (res) => {
           localStorage.setItem('user', JSON.stringify(res));
           localStorage.setItem('isLogged', 'true');
-          // window.location.href = '/';
+          window.location.href = '/';
           console.log('success', res);
         },
         error: (err) => {
           if (err.error.message) {
             this.serverErrorMessage = err.error.message;
           }
+          this.alertService.showError('Error while login to app');
           console.log('error', err);
         },
       });

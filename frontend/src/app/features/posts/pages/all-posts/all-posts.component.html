@@ -1,0 +1,26 @@
+<div class="w-full h-full bg-gray-300 flex py-20">
+  <div class="w-full h-full max-w-7xl mx-auto flex flex-col gap-10">
+    <div
+      class="w-full h-full flex flex-wrap items-center justify-center gap-10"
+    >
+      <ng-container *ngIf="!loading; else skeleton">
+        <app-post-card
+          class="flex justify-center h-full"
+          *ngFor="let post of posts; trackBy: trackByFn"
+          [post]="post"
+        ></app-post-card>
+      </ng-container>
+    </div>
+    <p-paginator
+      [rows]="9"
+      [totalRecords]="totalElements"
+      (onPageChange)="paginate($event)"
+    ></p-paginator>
+  </div>
+</div>
+
+<ng-template #skeleton>
+  <app-post-card-skeleton
+    *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9]; trackBy: trackByFn"
+  ></app-post-card-skeleton>
+</ng-template>

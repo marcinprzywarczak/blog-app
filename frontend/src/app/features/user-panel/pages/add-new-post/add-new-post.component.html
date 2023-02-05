@@ -1,0 +1,63 @@
+<div class="w-full h-full bg-gray-200 flex flex-col">
+  <div class="w-full h-full max-w-5xl flex flex-col mx-auto">
+    <form
+      [formGroup]="form"
+      (ngSubmit)="onSubmit()"
+      class="flex flex-col gap-10"
+    >
+      <div class="flex flex-col">
+        <label>Title</label>
+        <input pInputText class="w-full" formControlName="title" />
+      </div>
+
+      <div class="flex flex-col">
+        <label>Description</label>
+        <textarea
+          pInputTextarea
+          class="w-full"
+          rows="5"
+          formControlName="description"
+        ></textarea>
+      </div>
+
+      <div class="flex flex-row flex-wrap gap-3">
+        <div class="field-checkbox" *ngFor="let category of categories">
+          <p-checkbox
+            class="pr-2"
+            name="categories[]"
+            [formControl]="$any(form.controls['categories'])"
+            [value]="category.id"
+            [inputId]="category.id.toString()"
+          ></p-checkbox>
+          <label for="{{ category.id.toString() }}">{{ category.name }}</label>
+        </div>
+      </div>
+
+      <div class="flex flex-col">
+        <label>Content</label>
+        <textarea
+          pInputTextarea
+          class="w-full"
+          rows="5"
+          formControlName="content"
+        ></textarea>
+      </div>
+
+      <div class="flex flex-col">
+        <label>Main photo</label>
+        <input type="file" (change)="onChangeMainPhoto($event)" />
+      </div>
+
+      <div class="flex flex-col">
+        <label>Photos</label>
+        <input type="file" (change)="onChangePhoto($event)" />
+        <input type="file" (change)="onChangePhoto($event)" />
+        <input type="file" (change)="onChangePhoto($event)" />
+      </div>
+
+      <div class="flex">
+        <button pButton label="Add"></button>
+      </div>
+    </form>
+  </div>
+</div>

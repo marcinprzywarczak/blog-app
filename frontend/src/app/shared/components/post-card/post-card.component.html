@@ -1,19 +1,57 @@
-<div class="flex flex-col w-80 bg-gray-200 p-5 h-full">
-  <img [src]="post.mainPhotoUrl" alt="" />
-  <div class="flex flex-col gap-2">
-    <div class="text-3xl font-semibold pt-3">
-      {{ post.title }}
+<a
+  [routerLink]="['/posts/details/', post.id]"
+  class="flex flex-col w-80 bg-gray-100 h-full rounded-xl no-underline text-black relative"
+>
+  <img [src]="post.mainPhotoUrl" alt="" class="rounded-t-xl" />
+  <div class="flex flex-col gap-2 p-5 w-full justify-between h-full">
+    <div class="flex flex-col gap-2">
+      <div class="flex flex-wrap gap-2 uppercase">
+        <a
+          appClickStopPropagation
+          [routerLink]="['/posts/category', category.name]"
+          class="py-1 px-2 bg-gray-200 text-xs rounded-full no-underline text-gray-600 hover:text-gray-200 hover:bg-gray-600 transition duration-300"
+          *ngFor="let category of post.categories"
+        >
+          {{ category.name }}
+        </a>
+      </div>
+      <div class="text-2xl font-semibold">
+        {{ post.title }}
+      </div>
+      <div>
+        {{
+          post.description.length > 100
+            ? post.description.slice(0, 100) + "..."
+            : post.description
+        }}
+      </div>
     </div>
-    <div>
-      {{
-        post.description.length > 50
-          ? post.description.slice(0, 50) + "..."
-          : post.description
-      }}
-    </div>
-    <div class="flex flex-row items-center w-full">
-      <a href="" class="text-black no-underline pr-2">Read more</a>
-      <i class="pi pi-arrow-right text-sm" style="font-size: 0.8rem"></i>
+    <div class="flex flex-row items-center w-full pt-4 justify-between">
+      <div class="flex">
+        <p-avatar
+          [image]="post.user.avatarUrl"
+          styleClass="mr-2"
+          shape="circle"
+        ></p-avatar>
+        <div class="flex flex-col">
+          <div>{{ post.user.name }}</div>
+          <div class="text-xs text-gray-400">
+            {{ post.createdAt.toString() | timeAgo }}
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center justify-center">
+        <div class="pr-2">{{ post.likeCount }}</div>
+        <fa-icon [icon]="faThumbs" size="sm"></fa-icon>
+      </div>
     </div>
   </div>
-</div>
+  <!--  <button appClickStopPropagation class="absolute top-2 right-2 bg-transparent">-->
+  <!--    <i-->
+  <!--      appClickStopPropagation-->
+  <!--      class="heartIcon pi pi-heart-fill text-transparent hover:text-gray-700 cursor-pointer"-->
+  <!--      style="font-size: 2rem"-->
+  <!--      (click)="click()"-->
+  <!--    ></i>-->
+  <!--  </button>-->
+</a>

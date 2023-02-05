@@ -1,0 +1,13 @@
+<div class="w-full h-full flex flex-col rounded-md shadow-md p-4 gap-2">
+  <div class="flex w-full justify-between">
+    <div class="flex gap-2 items-center">
+      <p-avatar [image]="comment.user.avatarUrl" shape="circle"></p-avatar>
+      <div class="font-semibold">{{ comment.user.name }}</div>
+    </div>
+    <div class="text-sm text-gray-600">
+      {{ comment.createdAt.toString() | timeAgo }}
+    </div>
+  </div>
+  <div class="font-semibold">{{ comment.title }}</div>
+  <div>{{ comment.description }}</div>
+</div>

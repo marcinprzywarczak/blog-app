@@ -1,6 +1,7 @@
 package com.backend.backend.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -20,7 +21,7 @@ public class Post {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 500)
     private String description;
 
     @Column(nullable = false)
@@ -30,7 +31,7 @@ public class Post {
     private String mainPhotoName;
 
     @Lob
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100000)
     private String content;
 
     @Column(nullable = false)
@@ -38,9 +39,8 @@ public class Post {
 
     @Column(nullable = false)
     private long visitCounter;
-
-    @Column(nullable = false)
-    private long likes;
+    @Transient
+    private int likeCount;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -54,7 +54,6 @@ public class Post {
     private Set<Category> categories = new HashSet<>();
 
     @OneToMany(mappedBy = "post")
-    @JsonManagedReference
     private Set<Comment> comments = new HashSet<>();
 
     @OneToMany(mappedBy = "post")
@@ -66,6 +65,10 @@ public class Post {
 
     @UpdateTimestamp
     private Timestamp updatedAt;
+
+    @OneToMany(mappedBy = "post")
+    @JsonManagedReference
+    private Set<Like> likes = new HashSet<>();
 
     public long getId() {
         return id;
@@ -131,13 +134,6 @@ public class Post {
         this.visitCounter = visitCounter;
     }
 
-    public long getLikes() {
-        return likes;
-    }
-
-    public void setLikes(long likes) {
-        this.likes = likes;
-    }
 
     public User getUser() {
         return user;
@@ -155,6 +151,7 @@ public class Post {
         this.categories = categories;
     }
 
+    @JsonIgnore
     public Set<Comment> getComments() {
         return comments;
     }
@@ -185,5 +182,41 @@ public class Post {
 
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Set<Like> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Set<Like> likes) {
+        this.likes = likes;
+    }
+
+    public int getLikeCount() {
+        return this.likes.size();
+    }
+
+    public void setLikeCount() {
+        this.likeCount = this.likes.size();
+    }
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", mainPhotoUrl='" + mainPhotoUrl + '\'' +
+                ", mainPhotoName='" + mainPhotoName + '\'' +
+                ", content='" + content + '\'' +
+                ", active=" + active +
+                ", visitCounter=" + visitCounter +
+                ", user=" + user +
+                ", categories=" + categories +
+                ", comments=" + comments +
+                ", photos=" + photos +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", likes=" + likes +
+                '}';
     }
 }

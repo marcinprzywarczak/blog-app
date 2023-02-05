@@ -29,7 +29,6 @@ public class CategoryController {
     private UserRepository userRepository;
 
 
-    @PreAuthorize("isAuthenticated()")
     @GetMapping
     public List<Category> getCategories(){
         return this.categoryRepository.findAllByOrderById();
@@ -37,8 +36,10 @@ public class CategoryController {
 
     @GetMapping("/mostPopular")
     public List<CategoryWithPostsDto> getMostPopularCategories(){
-        List<Category> categories = this.categoryRepository.findAll(Sort.by("posts").descending());
-        categories = categories.subList(0, 3);
+        Pageable pageable = PageRequest.of(0, 3);
+
+        List<Category> categories = this.categoryRepository.findAllOrderByPostsCountDesc(pageable).getContent();
+
         List<CategoryWithPostsDto> categoryWithPostsDto = categories.stream().map(
                 category -> new CategoryWithPostsDto(
                         category.getId(),

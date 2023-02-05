@@ -4,10 +4,17 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { RouterModule } from '@angular/router';
 import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { AvatarModule } from 'primeng/avatar';
+import { TimeAgoPipe } from './pipes/TimeAgoPipe';
+import { ClickStopPropagationDirective } from './directives/click-stop-propagation.directive';
 
 @NgModule({
-  declarations: [NavbarComponent, ClickOutsideDirective],
+  declarations: [
+    NavbarComponent,
+    ClickOutsideDirective,
+    TimeAgoPipe,
+    ClickStopPropagationDirective,
+  ],
   imports: [CommonModule, RouterModule, AvatarModule],
-  exports: [NavbarComponent],
+  exports: [NavbarComponent, TimeAgoPipe, ClickStopPropagationDirective],
 })
 export class CoreModule {}

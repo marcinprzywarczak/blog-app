@@ -57,7 +57,6 @@ public class PostService {
         post.setMainPhotoUrl(fileUrl);
         post.setActive(true);
         post.setVisitCounter(0);
-        post.setLikes(0);
         Post savePost = this.postRepository.save(post);
 
         Set<Photo> photoSet = new HashSet<>();

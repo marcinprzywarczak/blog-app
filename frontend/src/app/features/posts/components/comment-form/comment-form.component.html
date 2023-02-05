@@ -1,0 +1,36 @@
+<div class="flex w-full gap-6">
+  <p-avatar [image]="user.avatarUrl" size="xlarge" shape="circle"></p-avatar>
+  <form
+    [formGroup]="form"
+    (ngSubmit)="submitForm()"
+    class="flex flex-col w-full gap-8"
+  >
+    <div class="flex flex-col w-full">
+      <span class="p-float-label">
+        <input
+          class="w-full"
+          type="text"
+          id="login"
+          pInputText
+          formControlName="title"
+        />
+        <label for="login">Title</label>
+      </span>
+    </div>
+    <div class="flex flex-col w-full">
+      <span class="p-float-label">
+        <textarea
+          class="w-full"
+          type="text"
+          id="description"
+          pInputTextarea
+          formControlName="description"
+        ></textarea>
+        <label for="login">Content</label>
+      </span>
+    </div>
+    <div class="w-full flex justify-end">
+      <button pButton label="Add comment"></button>
+    </div>
+  </form>
+</div>

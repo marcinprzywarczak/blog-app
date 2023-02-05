@@ -1,5 +1,12 @@
-import { Component, Input } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { Post } from '../../../core/models/post';
+import { faThumbsUp } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-post-card',
@@ -8,4 +15,9 @@ import { Post } from '../../../core/models/post';
 })
 export class PostCardComponent {
   @Input() post: Post;
+  faThumbs = faThumbsUp;
+
+  click() {
+    console.log('clicked');
+  }
 }
