@@ -8,6 +8,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ButtonModule } from 'primeng/button';
+import { EditorModule } from 'primeng/editor';
 
 @NgModule({
   declarations: [AddNewPostComponent],
@@ -19,6 +20,7 @@ import { ButtonModule } from 'primeng/button';
     InputTextareaModule,
     CheckboxModule,
     ButtonModule,
+    EditorModule,
   ],
 })
 export class UserPanelModule {}

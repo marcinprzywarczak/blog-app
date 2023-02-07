@@ -1,8 +1,8 @@
-<div class="flex items-center justify-end gap-2">
+<div class="flex items-end justify-end gap-2">
   <div
     class="cursor-pointer hover:underline underline-offset-4"
     (click)="openLikes()"
-    style="font-size: 1.5rem"
+    style="font-size: 1.25rem"
   >
     {{ likeCounts }}
   </div>
@@ -11,6 +11,6 @@
     (click)="like()"
     [icon]="liked ? faThumbsLiked : faThumbs"
     size="xl"
-    style="font-size: 1.5rem"
+    style="font-size: 1.25rem"
   ></fa-icon>
 </div>

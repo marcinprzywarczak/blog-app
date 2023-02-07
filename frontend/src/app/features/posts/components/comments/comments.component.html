@@ -2,11 +2,13 @@
   <div
     class="flex flex-col sm:flex-row sm:flex-wrap w-full mx-auto gap-5 pb-4 justify-center"
   >
-    <app-comment-card
-      class="sm:w-2/5"
-      *ngFor="let comment of comments; trackBy: trackByFn"
-      [comment]="comment"
-    ></app-comment-card>
+    <ng-container *ngIf="totalElements > 0; else empty">
+      <app-comment-card
+        class="sm:w-2/5"
+        *ngFor="let comment of comments; trackBy: trackByFn"
+        [comment]="comment"
+      ></app-comment-card>
+    </ng-container>
   </div>
   <p-paginator
     [rows]="6"
@@ -14,3 +16,8 @@
     (onPageChange)="paginate($event)"
   ></p-paginator>
 </ng-container>
+<ng-template #empty>
+  <div class="text-black font-semibold text-xl italic">
+    This post has no comments yet. Add the first comment to the post.
+  </div>
+</ng-template>

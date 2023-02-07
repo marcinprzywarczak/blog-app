@@ -35,6 +35,7 @@ export class CommentFormComponent implements OnInit {
     const commentForm: CommentForm = this.form.value;
     this.commentService.addCommentToPost(commentForm, this.postId).subscribe({
       next: (res) => {
+        this.form.reset();
         this.dataReloadService.triggerNewComment();
       },
       error: (err) => {},

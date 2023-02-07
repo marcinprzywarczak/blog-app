@@ -11,6 +11,8 @@ import { Post } from '../../../../core/models/post';
 export class PostDetailsComponent implements OnInit {
   postId: number;
   post: Post;
+  displayCustom: boolean;
+  activeIndex = 0;
   constructor(
     private route: ActivatedRoute,
     private postService: PostService
@@ -27,8 +29,20 @@ export class PostDetailsComponent implements OnInit {
       next: (res) => {
         console.log(res);
         this.post = res;
+        this.post.content = this.post.content.replaceAll(
+          'img',
+          `img class='w-auto max-h-96' `
+        );
+        console.log(this.post.content);
       },
       error: (err) => {},
     });
+  }
+
+  imageClick(index: number) {
+    this.activeIndex = this.post.photos.indexOf(
+      this.post.photos.find((x) => x.id === index)!
+    );
+    this.displayCustom = true;
   }
 }

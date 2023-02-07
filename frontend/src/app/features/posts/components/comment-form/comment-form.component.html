@@ -1,5 +1,10 @@
 <div class="flex w-full gap-6">
-  <p-avatar [image]="user.avatarUrl" size="xlarge" shape="circle"></p-avatar>
+  <p-avatar
+    *ngIf="user"
+    [image]="user.avatarUrl"
+    size="xlarge"
+    shape="circle"
+  ></p-avatar>
   <form
     [formGroup]="form"
     (ngSubmit)="submitForm()"

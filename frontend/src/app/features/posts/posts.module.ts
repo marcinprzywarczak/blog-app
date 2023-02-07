@@ -21,6 +21,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { UserLikesComponent } from './components/user-likes/user-likes.component';
 import { CoreModule } from '../../core/core.module';
 import { RippleModule } from 'primeng/ripple';
+import { GalleriaModule } from 'primeng/galleria';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { RippleModule } from 'primeng/ripple';
     FontAwesomeModule,
     CoreModule,
     RippleModule,
+    GalleriaModule,
   ],
 })
 export class PostsModule {}

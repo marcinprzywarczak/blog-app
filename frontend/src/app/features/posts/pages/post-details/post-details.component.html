@@ -1,19 +1,56 @@
 <div class="w-full h-full py-20" *ngIf="post">
-  <div class="w-full h-full max-w-5xl flex flex-col gap-8 mx-auto text-justify">
-    <app-likes
-      [likeCounts]="post.likeCount"
-      [liked]="post.likedByUser"
-      [postId]="post.id"
-    ></app-likes>
-    <div>{{ post.user.email }}</div>
-    <div>{{ post.id }}</div>
-    <div>{{ post.title }}</div>
-    <div>{{ post.description }}</div>
-    <div>{{ post.content }}</div>
+  <div class="w-full h-full max-w-5xl flex flex-col gap-8 mx-auto px-5">
+    <div class="flex flex-col w-full">
+      <div class="flex justify-between items-center">
+        <div class="flex gap-2 items-center justify-center">
+          <p-avatar
+            shape="circle"
+            size="normal"
+            [image]="post.user.avatarUrl"
+          ></p-avatar>
+          <div>{{ post.user.name }}</div>
+        </div>
+        <app-likes
+          [likeCounts]="post.likeCount"
+          [liked]="post.likedByUser"
+          [postId]="post.id"
+        ></app-likes>
+      </div>
+      <div class="flex items-end justify-end italic text-gray-700 text-sm">
+        {{ post.createdAt | date : "dd-MM-yyyy HH:mm:ss" }}
+      </div>
+    </div>
+    <img [src]="post.mainPhotoUrl" alt="" class="w-full h-auto" />
+    <div class="flex flex-col px-5">
+      <div class="font-bold text-4xl text-justify py-6">{{ post.title }}</div>
+      <div class="text-justify py-6">{{ post.description }}</div>
+      <div [innerHTML]="post.content"></div>
+    </div>
+
+    <p-carousel
+      *ngIf="post.photos.length > 0"
+      [value]="post.photos"
+      [numVisible]="1"
+      [numScroll]="1"
+      [circular]="false"
+    >
+      <ng-template
+        let-photo
+        pTemplate="item"
+        class="flex items-center justify-center"
+      >
+        <img
+          [src]="photo.photoUrl"
+          alt=""
+          class="w-full cursor-pointer"
+          (click)="imageClick(photo.id)"
+        />
+      </ng-template>
+    </p-carousel>
 
     <div class="flex flex-col gap-8">
       <app-comment-form
-        class="pt-10 md:px-32 px-5"
+        class="pt-10 md:w-2/3 lg:1/2 w-full px-5 mx-auto"
         [postId]="post.id"
       ></app-comment-form>
 
@@ -21,3 +58,25 @@
     </div>
   </div>
 </div>
+<p-galleria
+  *ngIf="post && post.photos"
+  [value]="post.photos"
+  [(visible)]="displayCustom"
+  [(activeIndex)]="activeIndex"
+  [containerStyle]="{ 'max-width': '90%' }"
+  [numVisible]="7"
+  [circular]="true"
+  [fullScreen]="true"
+  [showItemNavigators]="true"
+  [showThumbnails]="false"
+  [baseZIndex]="100000"
+>
+  <ng-template pTemplate="item" let-item>
+    <img [src]="item.photoUrl" style="width: 100%; display: block" />
+  </ng-template>
+  <ng-template pTemplate="thumbnail" let-item>
+    <div class="grid grid-nogutter justify-content-center">
+      <img [src]="item.photoUrl" style="display: block" />
+    </div>
+  </ng-template>
+</p-galleria>

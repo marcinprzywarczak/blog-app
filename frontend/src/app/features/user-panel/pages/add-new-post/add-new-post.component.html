@@ -83,12 +83,50 @@
 
       <div class="flex flex-col gap-2">
         <label>Content</label>
-        <textarea
-          pInputTextarea
-          class="w-full"
-          rows="5"
+        <p-editor
           formControlName="content"
-        ></textarea>
+          class="w-full"
+          [style]="{ height: '320px' }"
+        >
+          <ng-template pTemplate="header">
+            <span class="ql-formats">
+              <select class="ql-header"></select>
+            </span>
+
+            <span class="ql-formats">
+              <button class="ql-bold" aria-label="Bold"></button>
+              <button class="ql-italic" aria-label="Italic"></button>
+              <button class="ql-underline" aria-label="Underline"></button>
+              <button class="ql-strike" aria-label="Strike"></button>
+            </span>
+
+            <span class="ql-formats">
+              <select class="ql-color"></select>
+            </span>
+            <span class="ql-formats">
+              <select class="ql-background"></select>
+            </span>
+            <span class="ql-formats">
+              <select class="ql-align"></select>
+            </span>
+
+            <span class="ql-formats">
+              <button class="ql-list" value="ordered"></button>
+              <button class="ql-list" value="bullet"></button>
+            </span>
+
+            <span class="ql-formats">
+              <button aria-label="Link" class="ql-link"></button>
+            </span>
+          </ng-template>
+        </p-editor>
+
+        <!--        <textarea-->
+        <!--          pInputTextarea-->
+        <!--          class="w-full"-->
+        <!--          rows="5"-->
+        <!--          formControlName="content"-->
+        <!--        ></textarea>-->
       </div>
 
       <div class="flex flex-col gap-2">

@@ -4,7 +4,7 @@
   <form
     [formGroup]="form"
     (ngSubmit)="onSubmit()"
-    class="w-full max-w-xl flex flex-col gap-8"
+    class="w-full max-w-xl flex flex-col gap-8 px-5"
   >
     <div *ngIf="serverErrorMessage" class="text-red-600 font-semibold">
       {{ serverErrorMessage }}
