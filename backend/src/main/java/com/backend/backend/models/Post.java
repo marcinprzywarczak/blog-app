@@ -42,6 +42,9 @@ public class Post {
     @Transient
     private int likeCount;
 
+    @Transient
+    private boolean isLikedByUser;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @JsonManagedReference(value = "post-user")
@@ -199,6 +202,15 @@ public class Post {
     public void setLikeCount() {
         this.likeCount = this.likes.size();
     }
+
+    public boolean isLikedByUser() {
+        return isLikedByUser;
+    }
+
+    public void setLikedByUser(boolean likedByUser) {
+        isLikedByUser = likedByUser;
+    }
+
     @Override
     public String toString() {
         return "Post{" +

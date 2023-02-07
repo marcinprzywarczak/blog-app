@@ -9,6 +9,8 @@ import { Post } from '../models/post';
 import { Pagination } from '../models/pagination';
 import { CategoryWithPosts } from '../models/category-with-posts';
 import { PostsByCategories } from '../models/postsByCategories';
+import { PaginationWithSort } from '../models/paginationWithSort';
+import { PaginationSortSearch } from '../models/paginationSortSearch';
 
 @Injectable({
   providedIn: 'root',
@@ -16,10 +18,12 @@ import { PostsByCategories } from '../models/postsByCategories';
 export class PostService {
   constructor(private http: HttpClient) {}
 
-  public getAllPosts(pagination: Pagination): Observable<Pageable<Post>> {
+  public getAllPosts(
+    paginationWithSort: PaginationSortSearch
+  ): Observable<Pageable<Post>> {
     return this.http.post<Pageable<Post>>(
       `${environment.apiUrl}/api/post`,
-      pagination,
+      paginationWithSort,
       {
         withCredentials: true,
       }

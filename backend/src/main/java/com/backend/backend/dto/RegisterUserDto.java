@@ -1,6 +1,6 @@
 package com.backend.backend.dto;
 
-import com.backend.backend.validations.PasswordMatches;
+import com.backend.backend.validations.password.PasswordMatches;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.web.multipart.MultipartFile;

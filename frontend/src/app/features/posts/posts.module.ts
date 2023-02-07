@@ -16,6 +16,11 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ButtonModule } from 'primeng/button';
 import { AvatarModule } from 'primeng/avatar';
 import { CommentsComponent } from './components/comments/comments.component';
+import { LikesComponent } from './components/likes/likes.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { UserLikesComponent } from './components/user-likes/user-likes.component';
+import { CoreModule } from '../../core/core.module';
+import { RippleModule } from 'primeng/ripple';
 
 @NgModule({
   declarations: [
@@ -25,6 +30,8 @@ import { CommentsComponent } from './components/comments/comments.component';
     PostCategoriesComponent,
     CommentFormComponent,
     CommentsComponent,
+    LikesComponent,
+    UserLikesComponent,
   ],
   imports: [
     CommonModule,
@@ -37,6 +44,9 @@ import { CommentsComponent } from './components/comments/comments.component';
     InputTextareaModule,
     ButtonModule,
     AvatarModule,
+    FontAwesomeModule,
+    CoreModule,
+    RippleModule,
   ],
 })
 export class PostsModule {}

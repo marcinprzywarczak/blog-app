@@ -27,14 +27,12 @@ export class PostsByCategoryComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loading = true;
-    this.routeParamSubscription = this.route.params
-      .pipe(finalize(() => {}))
-      .subscribe((params) => {
-        if (params['category']) {
-          this.categoryName = this.route.snapshot.params['category'];
-        }
-        this.getCategories();
-      });
+    this.routeParamSubscription = this.route.params.subscribe((params) => {
+      if (params['category']) {
+        this.categoryName = this.route.snapshot.params['category'];
+      }
+      this.getCategories();
+    });
   }
 
   ngOnDestroy() {
@@ -78,7 +76,7 @@ export class PostsByCategoryComponent implements OnInit, OnDestroy {
       });
   }
 
-  async paginate(event: any) {
+  paginate(event: any) {
     this.getPostsByCategory(event.first + 1, event.rows);
   }
 

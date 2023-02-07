@@ -11,7 +11,7 @@
       class="flex flex-col w-full gap-4 border-b-4 border-gray-200 pb-12"
     >
       <div class="uppercase text-center text-2xl font-semibold">
-        {{ category.name }}
+        {{ category.name }} ({{ category.postCount }} posts)
       </div>
       <p-carousel
         [value]="category.posts"
@@ -26,6 +26,7 @@
           class="flex items-center justify-center"
         >
           <app-post-card
+            [@dropDownMenu]
             class="flex justify-center h-full"
             [post]="post"
           ></app-post-card>

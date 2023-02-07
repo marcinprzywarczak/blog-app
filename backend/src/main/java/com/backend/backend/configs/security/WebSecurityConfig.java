@@ -74,6 +74,7 @@ public class WebSecurityConfig {
                 .requestMatchers("/api/category/**").permitAll()
                 .requestMatchers("/api/post/**").permitAll()
                 .requestMatchers("/api/comment/**").permitAll()
+                .requestMatchers("/api/like/**").permitAll()
                 .anyRequest().authenticated().and();
 
         http.authenticationProvider(authenticationProvider());

@@ -10,10 +10,15 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { HttpRequestInterceptor } from './http-request.interceptor';
+import { DataReloadService } from '../services/data-reload.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private dataReloadService: DataReloadService
+  ) {}
 
   intercept(
     request: HttpRequest<unknown>,
@@ -24,7 +29,9 @@ export class AuthInterceptor implements HttpInterceptor {
         if (err.status === 401) {
           this.authService.logout().subscribe(() => {
             localStorage.clear();
-            window.location.href = '/login';
+            // window.location.href = '/login';
+            this.dataReloadService.triggerNavbarUserInfo();
+            this.router.navigate(['/login']);
           });
         }
         return throwError(err);

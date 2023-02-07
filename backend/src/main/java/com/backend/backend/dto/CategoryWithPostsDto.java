@@ -13,10 +13,13 @@ public class CategoryWithPostsDto {
 
     private List<Post> posts;
 
-    public CategoryWithPostsDto(long id, String name, List<Post> posts) {
+    private int postCount;
+
+    public CategoryWithPostsDto(long id, String name, List<Post> posts, int postCount) {
         this.id = id;
         this.name = name;
         this.posts = posts;
+        this.postCount = postCount;
     }
 
     public long getId() {
@@ -41,5 +44,13 @@ public class CategoryWithPostsDto {
 
     public void setPosts(List<Post> posts) {
         this.posts = posts;
+    }
+
+    public int getPostCount() {
+        return postCount;
+    }
+
+    public void setPostCount(int postCount) {
+        this.postCount = postCount;
     }
 }

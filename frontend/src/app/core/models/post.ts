@@ -18,4 +18,5 @@ export interface Post {
   updatedAt: Date;
   user: User;
   likeCount: number;
+  likedByUser: boolean;
 }

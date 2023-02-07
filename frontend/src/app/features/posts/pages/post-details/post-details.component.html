@@ -1,5 +1,10 @@
 <div class="w-full h-full py-20" *ngIf="post">
   <div class="w-full h-full max-w-5xl flex flex-col gap-8 mx-auto text-justify">
+    <app-likes
+      [likeCounts]="post.likeCount"
+      [liked]="post.likedByUser"
+      [postId]="post.id"
+    ></app-likes>
     <div>{{ post.user.email }}</div>
     <div>{{ post.id }}</div>
     <div>{{ post.title }}</div>

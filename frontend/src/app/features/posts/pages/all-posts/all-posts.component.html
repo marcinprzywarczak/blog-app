@@ -1,17 +1,52 @@
-<div class="w-full h-full bg-gray-300 flex py-20">
+<div class="w-full h-full bg-gray-300 flex py-20 grow">
   <div class="w-full h-full max-w-7xl mx-auto flex flex-col gap-10">
+    <div class="flex justify-between">
+      <div class="flex flex-col self-end gap-2">
+        <label>Search by title</label>
+        <div class="p-inputgroup">
+          <input
+            type="text"
+            pInputText
+            placeholder="Keyword"
+            [(ngModel)]="search"
+          />
+          <button
+            type="button"
+            pButton
+            pRipple
+            label="Search"
+            (click)="searchByInput()"
+          ></button>
+        </div>
+      </div>
+      <div class="flex flex-col self-end gap-2">
+        <label>Sort by</label>
+        <p-dropdown
+          [options]="sortOptions"
+          optionLabel="label"
+          optionValue="sort"
+          [(ngModel)]="sortField"
+          (onChange)="changeSortField($event)"
+        ></p-dropdown>
+      </div>
+    </div>
     <div
       class="w-full h-full flex flex-wrap items-center justify-center gap-10"
     >
       <ng-container *ngIf="!loading; else skeleton">
-        <app-post-card
-          class="flex justify-center h-full"
-          *ngFor="let post of posts; trackBy: trackByFn"
-          [post]="post"
-        ></app-post-card>
+        <ng-container *ngIf="!empty">
+          <app-post-card
+            [@dropDownMenu]
+            class="flex justify-center h-full"
+            *ngFor="let post of posts; trackBy: trackByFn"
+            [post]="post"
+          ></app-post-card>
+        </ng-container>
+        <ng-container *ngIf="empty"><div>No results</div> </ng-container>
       </ng-container>
     </div>
     <p-paginator
+      #paginator
       [rows]="9"
       [totalRecords]="totalElements"
       (onPageChange)="paginate($event)"

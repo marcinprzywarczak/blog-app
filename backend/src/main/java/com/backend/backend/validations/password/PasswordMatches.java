@@ -1,4 +1,4 @@
-package com.backend.backend.validations;
+package com.backend.backend.validations.password;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;

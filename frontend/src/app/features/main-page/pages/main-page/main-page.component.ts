@@ -3,11 +3,13 @@ import { PostService } from '../../../../core/services/post.service';
 import { Post } from '../../../../core/models/post';
 import { CategoryWithPosts } from '../../../../core/models/category-with-posts';
 import { finalize } from 'rxjs';
+import { DropDownAnimation } from '../../../../core/animations/dropdown-animation';
 
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
   styleUrls: ['./main-page.component.scss'],
+  animations: [DropDownAnimation],
 })
 export class MainPageComponent implements OnInit {
   posts: Post[];

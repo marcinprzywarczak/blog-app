@@ -7,9 +7,14 @@ import { Comment } from '../models/comment';
 })
 export class DataReloadService {
   newComment = new Subject<boolean>();
+  navbarUserInfo = new Subject<boolean>();
   constructor() {}
 
   triggerNewComment() {
     this.newComment.next(true);
+  }
+
+  triggerNavbarUserInfo() {
+    this.navbarUserInfo.next(true);
   }
 }

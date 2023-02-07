@@ -12,6 +12,7 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { httpAuthInterceptor } from './core/interceptors/auth.interceptor';
+import { DialogService } from 'primeng/dynamicdialog';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,7 +26,12 @@ import { httpAuthInterceptor } from './core/interceptors/auth.interceptor';
     ToastModule,
     FontAwesomeModule,
   ],
-  providers: [httpInterceptorProviders, httpAuthInterceptor, MessageService],
+  providers: [
+    httpInterceptorProviders,
+    httpAuthInterceptor,
+    MessageService,
+    DialogService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

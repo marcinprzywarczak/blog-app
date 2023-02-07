@@ -1,5 +1,6 @@
-package com.backend.backend.validations;
+package com.backend.backend.validations.password;
 import com.backend.backend.dto.RegisterUserDto;
+import com.backend.backend.validations.password.PasswordMatches;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

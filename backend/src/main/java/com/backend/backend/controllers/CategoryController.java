@@ -44,7 +44,8 @@ public class CategoryController {
                 category -> new CategoryWithPostsDto(
                         category.getId(),
                         category.getName(),
-                        category.getPosts().stream().toList().subList(0, Math.min(category.getPosts().size(), 6))
+                        category.getPosts().stream().toList().subList(0, Math.min(category.getPosts().size(), 6)),
+                        category.getPosts().size()
                 )
         ).toList();
 

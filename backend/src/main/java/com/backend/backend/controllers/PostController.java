@@ -1,14 +1,14 @@
 package com.backend.backend.controllers;
 
-import com.backend.backend.dto.NewPostDto;
-import com.backend.backend.dto.PaginationDto;
-import com.backend.backend.dto.PostByCategoriesDto;
-import com.backend.backend.dto.PostByUserDto;
+import com.backend.backend.dto.*;
 import com.backend.backend.exceptions.UserNotFoundException;
 import com.backend.backend.models.Category;
+import com.backend.backend.models.Like;
 import com.backend.backend.models.Post;
 import com.backend.backend.models.User;
+import com.backend.backend.payload.MessageResponse;
 import com.backend.backend.repositories.CategoryRepository;
+import com.backend.backend.repositories.LikeRepository;
 import com.backend.backend.repositories.PostRepository;
 import com.backend.backend.repositories.UserRepository;
 import com.backend.backend.services.PostService;
@@ -44,11 +44,16 @@ public class PostController {
     @Autowired
     CategoryRepository categoryRepository;
 
+    @Autowired
+    LikeRepository likeRepository;
+
     @PostMapping
-    public Page<Post> getAll(@RequestBody @Valid PaginationDto paginationDto){
-        int page = paginationDto.getFirst() / paginationDto.getRows();
-        Pageable pageable = PageRequest.of(page, paginationDto.getRows(), Sort.by("createdAt").descending());
-        return this.postRepository.findAll(pageable);
+    public ResponseEntity<?> getAll(@RequestBody @Valid PaginationSortSearchPostDto paginationSortSearchDto) {
+        List<String> availableOptions = Arrays.asList("createdAt", "title", "likes");
+        if(!availableOptions.contains(paginationSortSearchDto.getField())) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Invalid field argument"));
+        }
+        return this.postService.getAllPostPaginationSortAndSearch(paginationSortSearchDto);
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -64,6 +69,7 @@ public class PostController {
         Pageable pageable = PageRequest.of(page, postByCategoriesDto.getRows(), Sort.by("createdAt").descending());
         List<Category> categories = this.categoryRepository.findAllById(postByCategoriesDto.getCategoryIds());
         return this.postRepository.findAllByCategoriesIn(new HashSet<>(categories), pageable);
+
     }
 
 
@@ -79,9 +85,17 @@ public class PostController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getPost(@PathVariable long id) {
+    public ResponseEntity<?> getPost(@PathVariable long id, Authentication authentication) {
         Optional<Post> post = this.postRepository.findById(id);
         if(post.isPresent()){
+            if(authentication != null) {
+                User user = this.userRepository.findByEmail(authentication.getName());
+                Like like = this.likeRepository.findAllByPostAndUser(post.get(), user);
+                post.get().setLikedByUser(like != null);
+            } else {
+                post.get().setLikedByUser(false);
+            }
+
             return ResponseEntity.ok().body(post.get());
         } else {
             return ResponseEntity.notFound().build();

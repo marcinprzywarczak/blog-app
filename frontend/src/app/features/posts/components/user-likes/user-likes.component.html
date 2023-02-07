@@ -1,0 +1,24 @@
+<div
+  class="w-full h-full flex"
+  *ngIf="likes"
+  [ngClass]="likes.length === 0 ? 'justify-center items-center' : ''"
+>
+  <ng-container *ngIf="likes.length === 0">
+    <div class="text-xl text-bold text-center align-middle">Empty :(</div>
+  </ng-container>
+  <div
+    *ngIf="likes.length > 0"
+    class="flex flex-col w-full h-full divide-y divide-gray-800"
+  >
+    <div
+      class="flex flex-row py-2 px-1 justify-between items-center"
+      *ngFor="let like of likes"
+    >
+      <div class="flex items-center">
+        <p-avatar [image]="like.user.avatarUrl" shape="circle"></p-avatar>
+        <div class="pl-2">{{ like.user.name }}</div>
+      </div>
+      <div>{{ like.createdAt.toString() | timeAgo }}</div>
+    </div>
+  </div>
+</div>
