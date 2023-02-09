@@ -1,5 +1,6 @@
 <div class="w-full bg-gray-100 px-2 md:px-20">
-  <div class="flex flex-row justify-between">
+  <!--  desktop menu-->
+  <div class="hidden md:flex flex-row justify-between">
     <div class="flex flex-row gap-x-4 items-center justify-center">
       <a
         class="menuItem"
@@ -12,8 +13,7 @@
       <a
         class="menuItem"
         routerLink="/posts"
-        routerLinkActive="menuItemActive"
-        [routerLinkActiveOptions]="{ exact: true }"
+        [ngClass]="isLinkActive('/posts') ? 'menuItemActive' : ''"
       >
         All posts
       </a>
@@ -67,18 +67,102 @@
       </div>
     </div>
   </div>
+
+  <!--  mobile menu-->
+  <div class="md:hidden flex flex-row justify-between items-center">
+    <fa-icon
+      #mobileMenuIcon
+      [icon]="activeIcon"
+      style="font-size: 2rem"
+      class="py-2 px-2 transition duration-300"
+      (click)="clickMobileMenu()"
+      appClickOutside
+      (clickOutside)="clickOutsideMobileMenu()"
+    ></fa-icon>
+    <div>
+      <div *ngIf="isLogged; else loginButtons">
+        <div
+          appClickOutside
+          (clickOutside)="userDropdownMobile = false"
+          (click)="userDropdownMobile = !userDropdownMobile"
+          class="relative w-full cursor-pointer"
+        >
+          <div
+            class="flex flex-row items-center cursor-pointer hover:text-gray-600 px-2 py-4"
+          >
+            <p-avatar
+              [image]="user.avatarUrl"
+              shape="circle"
+              class="pr-2"
+            ></p-avatar>
+            <div class="pr-2">{{ user.email }}</div>
+            <i class="pi pi-angle-down text-center align-middle"></i>
+          </div>
+          <div
+            [@dropDownMenu]="userDropdownMobile"
+            *ngIf="userDropdownMobile"
+            class="max-w-full min-w-max w-full z-50 overflow-visible absolute bg-gray-200 cursor-pointer right-0 flex flex-col"
+          >
+            <a
+              class="py-4 px-2 hover:text-gray-600 menu-item text-black no-underline"
+              routerLink="user/addNewPost"
+              >Add new post</a
+            >
+            <div
+              class="py-4 px-2 hover:text-gray-600 menu-item"
+              (click)="logout()"
+            >
+              <div class="flex items-center justify-between">
+                Logout
+                <i class="pi pi-arrow-right"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  [@dropDownMenu]="activeMobileMenu"
+  *ngIf="activeMobileMenu"
+  class="flex flex-col md:hidden absolute w-full h-full bg-gray-800 z-50 items-center justify-center bg-opacity-95 text-white"
+>
+  <a
+    class="menuItem menu-item menuItemMobile"
+    routerLink="/"
+    routerLinkActive="menuItemActive"
+    [routerLinkActiveOptions]="{ exact: true }"
+  >
+    Dashboard
+  </a>
+  <a
+    class="menuItem menu-item menuItemMobile"
+    routerLink="/posts"
+    [ngClass]="isLinkActive('/posts') ? 'menuItemActive' : ''"
+  >
+    All posts
+  </a>
+  <a
+    class="menuItem menu-item menuItemMobile"
+    routerLink="/posts/categories"
+    routerLinkActive="menuItemActive"
+    [routerLinkActiveOptions]="{ exact: true }"
+  >
+    Categories
+  </a>
 </div>
 <ng-template #loginButtons>
   <div class="flex flex-row gap-x-4">
     <a
       class="underline underline-offset-2 menuItem"
-      routerLink="/login"
+      routerLink="/auth/login"
       routerLinkActive="activeLink"
       >Login</a
     >
     <a
       class="underline underline-offset-2 menuItem"
-      routerLink="/register"
+      routerLink="/auth/register"
       routerLinkActive="activeLink"
       >Register</a
     >

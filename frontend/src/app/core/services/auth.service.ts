@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { User } from '../models/user';
@@ -15,6 +15,17 @@ export class AuthService {
     return this.http.post<User>(
       `${environment.apiUrl}/api/auth/signin`,
       loginForm
+    );
+  }
+
+  public register(registerData: FormData) {
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'multipart/form-data');
+    headers.append('Accept', 'application/json');
+    return this.http.post<any>(
+      `${environment.apiUrl}/api/auth/register`,
+      registerData,
+      { headers: headers }
     );
   }
 

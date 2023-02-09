@@ -13,6 +13,7 @@ import { MessageService } from 'primeng/api';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { httpAuthInterceptor } from './core/interceptors/auth.interceptor';
 import { DialogService } from 'primeng/dynamicdialog';
+import { ScrollTopModule } from 'primeng/scrolltop';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +26,7 @@ import { DialogService } from 'primeng/dynamicdialog';
     CoreModule,
     ToastModule,
     FontAwesomeModule,
+    ScrollTopModule,
   ],
   providers: [
     httpInterceptorProviders,

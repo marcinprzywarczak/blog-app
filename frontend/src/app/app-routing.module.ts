@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { MainPageComponent } from './features/main-page/pages/main-page/main-page.component';
 
 const routes: Routes = [
   {
@@ -8,11 +9,12 @@ const routes: Routes = [
       import('./features/main-page/main-page.module').then(
         (m) => m.MainPageModule
       ),
+    pathMatch: 'full',
   },
   {
-    path: 'login',
+    path: 'auth',
     loadChildren: () =>
-      import('./features/login/login.module').then((m) => m.LoginModule),
+      import('./features/auth/auth.module').then((m) => m.AuthModule),
   },
   {
     path: 'posts',
@@ -26,13 +28,11 @@ const routes: Routes = [
         (m) => m.UserPanelModule
       ),
   },
-  // {
-  //   path: '*',
-  //   loadChildren: () =>
-  //     import('./features/main-page/main-page.module').then(
-  //       (m) => m.MainPageModule
-  //     ),
-  // },
+  {
+    path: '**',
+    redirectTo: '',
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({

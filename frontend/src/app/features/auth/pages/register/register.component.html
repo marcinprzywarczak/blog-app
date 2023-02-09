@@ -1,0 +1,159 @@
+<div
+  class="w-full h-full min-h-max flex flex-col grow items-center justify-center my-auto py-20"
+>
+  <div class="w-full max-w-xl px-5 pb-4">
+    <h1 class="m-0 text-3xl font-semibold">Create an account in our blog</h1>
+  </div>
+  <form
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()"
+    class="w-full max-w-xl flex flex-col gap-8 px-5"
+  >
+    <div *ngIf="serverErrorMessages" class="text-red-600 font-semibold">
+      <ng-container *ngFor="let message of serverErrorMessages">
+        <div>{{ message.defaultMessage }}</div>
+      </ng-container>
+      {{ serverErrorMessage }}
+    </div>
+    <div class="w-full flex flex-col gap-2">
+      <span class="p-float-label">
+        <input
+          class="w-full"
+          type="text"
+          id="name"
+          pInputText
+          formControlName="name"
+        />
+        <label for="name">Name</label>
+      </span>
+      <div
+        *ngIf="
+          submitted ||
+          form.controls['name'].touched ||
+          form.controls['name'].dirty
+        "
+        class="text-red-600 font-semibold"
+      >
+        <div *ngIf="form.controls['name'].errors?.['required']">
+          Name is required!
+        </div>
+      </div>
+    </div>
+    <div class="w-full flex flex-col gap-2">
+      <span class="p-float-label">
+        <input
+          class="w-full"
+          type="text"
+          id="email"
+          pInputText
+          formControlName="email"
+        />
+        <label for="email">Login</label>
+      </span>
+      <div
+        *ngIf="
+          submitted ||
+          form.controls['email'].touched ||
+          form.controls['email'].dirty
+        "
+        class="text-red-600 font-semibold"
+      >
+        <div *ngIf="form.controls['email'].errors?.['required']">
+          Email is required!
+        </div>
+        <div *ngIf="form.controls['email'].errors?.['email']">
+          Email is incorrect!
+        </div>
+      </div>
+    </div>
+    <div class="w-full flex flex-col gap-2">
+      <span class="p-float-label">
+        <input
+          class="w-full"
+          id="password"
+          type="password"
+          pPassword
+          formControlName="password"
+          [feedback]="false"
+        />
+        <label for="password">Password</label>
+      </span>
+      <div
+        *ngIf="
+          submitted ||
+          form.controls['password'].touched ||
+          form.controls['password'].dirty
+        "
+        class="text-red-600 font-semibold"
+      >
+        <div *ngIf="form.controls['password'].errors?.['required']">
+          Password is required!
+        </div>
+      </div>
+    </div>
+    <div class="w-full flex flex-col gap-2">
+      <span class="p-float-label">
+        <input
+          class="w-full"
+          id="matchingPassword"
+          type="password"
+          pPassword
+          formControlName="matchingPassword"
+          [feedback]="false"
+        />
+        <label for="password">Password confirmation</label>
+      </span>
+      <div
+        *ngIf="
+          submitted ||
+          form.controls['matchingPassword'].touched ||
+          form.controls['matchingPassword'].dirty
+        "
+        class="text-red-600 font-semibold"
+      >
+        <div *ngIf="form.controls['matchingPassword'].errors?.['required']">
+          Password confirmation is required!
+        </div>
+        <div *ngIf="form.errors?.['confirmedPassword']">
+          Password and password confirmation are not matching!
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <label>Avatar</label>
+      <div class="photo-input">
+        <label
+          for="mainPhoto"
+          class="photo-input-label"
+          [ngClass]="[avatarSrc !== '' ? 'hidden' : ' flex']"
+          ><i class="pi pi-plus-circle text-xl"></i
+        ></label>
+        <input
+          id="mainPhoto"
+          class="hidden"
+          type="file"
+          (change)="onChangeAvatar($event)"
+        />
+        <ng-container *ngIf="avatarSrc">
+          <div class="relative w-fit">
+            <img [src]="avatarSrc" height="100px" />
+            <i
+              class="pi pi-times photo-input-delete"
+              (click)="deleteAvatar()"
+            ></i>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="w-full">
+      <button
+        class="w-full"
+        pButton
+        label="Register"
+        [loading]="loading"
+      ></button>
+    </div>
+  </form>
+</div>

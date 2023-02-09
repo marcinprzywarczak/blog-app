@@ -1,0 +1,17 @@
+:host{
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.photo-input-label{
+  @apply w-full h-full bg-gray-300 rounded justify-center items-center cursor-pointer hover:text-white;
+}
+
+.photo-input-delete{
+  @apply absolute top-0.5 right-0.5 cursor-pointer p-1 rounded-full text-white bg-red-700;
+}
+
+.photo-input{
+  @apply w-32 h-32;
+}

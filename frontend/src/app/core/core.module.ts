@@ -6,6 +6,7 @@ import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { AvatarModule } from 'primeng/avatar';
 import { TimeAgoPipe } from './pipes/TimeAgoPipe';
 import { ClickStopPropagationDirective } from './directives/click-stop-propagation.directive';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,7 @@ import { ClickStopPropagationDirective } from './directives/click-stop-propagati
     TimeAgoPipe,
     ClickStopPropagationDirective,
   ],
-  imports: [CommonModule, RouterModule, AvatarModule],
+  imports: [CommonModule, RouterModule, AvatarModule, FontAwesomeModule],
   exports: [NavbarComponent, TimeAgoPipe, ClickStopPropagationDirective],
 })
 export class CoreModule {}

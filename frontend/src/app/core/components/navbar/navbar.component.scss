@@ -9,3 +9,7 @@
 .menuItemActive {
   @apply font-semibold underline underline-offset-1;
 }
+
+.menuItemMobile {
+  @apply text-white text-xl py-4 hover:text-gray-400 w-full text-center;
+}
