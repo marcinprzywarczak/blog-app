@@ -9,3 +9,9 @@
 .photo-input{
   @apply w-32 h-32;
 }
+
+:host{
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}

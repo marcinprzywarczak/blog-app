@@ -6,6 +6,7 @@ import { MainPageComponent } from './pages/main-page/main-page.component';
 import { SharedModule } from '../../shared/shared.module';
 import { CarouselModule } from 'primeng/carousel';
 import { SkeletonModule } from 'primeng/skeleton';
+import { CoreModule } from '../../core/core.module';
 
 @NgModule({
   declarations: [MainPageComponent],
@@ -15,6 +16,7 @@ import { SkeletonModule } from 'primeng/skeleton';
     SharedModule,
     CarouselModule,
     SkeletonModule,
+    CoreModule,
   ],
 })
 export class MainPageModule {}

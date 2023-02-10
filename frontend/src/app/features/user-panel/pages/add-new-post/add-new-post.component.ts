@@ -5,11 +5,13 @@ import { CategoryService } from '../../../../core/services/category.service';
 import { PostService } from '../../../../core/services/post.service';
 import { AlertService } from '../../../../core/services/alert.service';
 import { Router } from '@angular/router';
+import { DropDownAnimation } from '../../../../core/animations/dropdown-animation';
 
 @Component({
   selector: 'app-add-new-post',
   templateUrl: './add-new-post.component.html',
   styleUrls: ['./add-new-post.component.scss'],
+  animations: [DropDownAnimation],
 })
 export class AddNewPostComponent implements OnInit {
   form: FormGroup;

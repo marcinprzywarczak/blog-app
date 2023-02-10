@@ -13,3 +13,9 @@
 .menuItemMobile {
   @apply text-white text-xl py-4 hover:text-gray-400 w-full text-center;
 }
+
+.mobileMenuContent{
+  height: -moz-available;
+  height: -webkit-fill-available;
+  height: fill-available;
+}

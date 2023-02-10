@@ -1,0 +1,16 @@
+<div
+  class="w-full h-full min-h-screen flex flex-col grow my-auto"
+  id="userPanelContent"
+>
+  <app-navbar
+    class="pt-16 md:pt-0 md:ml-80 duration-700 transition-[margin]"
+    [ngClass]="changeMargin ? 'md:ml-24' : 'md:ml-80'"
+  ></app-navbar>
+  <div
+    class="flex flex-col bg-slate-50 grow md:ml-80 duration-700 transition-[margin]"
+    [ngClass]="changeMargin ? 'md:ml-24' : 'md:ml-80'"
+  >
+    <router-outlet></router-outlet>
+  </div>
+</div>
+<app-user-panel-sidebar></app-user-panel-sidebar>

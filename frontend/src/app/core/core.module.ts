@@ -16,6 +16,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     ClickStopPropagationDirective,
   ],
   imports: [CommonModule, RouterModule, AvatarModule, FontAwesomeModule],
-  exports: [NavbarComponent, TimeAgoPipe, ClickStopPropagationDirective],
+  exports: [
+    NavbarComponent,
+    TimeAgoPipe,
+    ClickStopPropagationDirective,
+    ClickOutsideDirective,
+  ],
 })
 export class CoreModule {}

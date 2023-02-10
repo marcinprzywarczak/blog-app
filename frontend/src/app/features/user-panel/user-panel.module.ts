@@ -9,9 +9,21 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ButtonModule } from 'primeng/button';
 import { EditorModule } from 'primeng/editor';
+import { UserPanelSidebarComponent } from './components/user-panel-sidebar/user-panel-sidebar.component';
+import { UserPanelMainComponent } from './pages/user-panel-main/user-panel-main.component';
+import { CoreModule } from '../../core/core.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { UserPostsComponent } from './pages/user-posts/user-posts.component';
+import { UserAccountComponent } from './pages/user-account/user-account.component';
 
 @NgModule({
-  declarations: [AddNewPostComponent],
+  declarations: [
+    AddNewPostComponent,
+    UserPanelSidebarComponent,
+    UserPanelMainComponent,
+    UserPostsComponent,
+    UserAccountComponent,
+  ],
   imports: [
     CommonModule,
     UserPanelRoutingModule,
@@ -21,6 +33,8 @@ import { EditorModule } from 'primeng/editor';
     CheckboxModule,
     ButtonModule,
     EditorModule,
+    CoreModule,
+    FontAwesomeModule,
   ],
 })
 export class UserPanelModule {}

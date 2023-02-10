@@ -1,0 +1,90 @@
+<!--desktop sidebar-->
+<div
+  class="bg-white hidden md:flex w-80 fixed top-0 left-0 w-full flex-col min-h-screen max-h-screen h-full items-center justify-center z-50 py-10 rounded-xl duration-700 transition-[width]"
+  [@sidebar]="hideDesktopSidebar"
+  [ngClass]="hideDesktopSidebar ? 'w-24 ' : 'w-80 px-6'"
+>
+  <div class="flex flex-col w-full overflow-y-auto items-center">
+    <div
+      class="flex flex-col w-full overflow-y-auto items-center no-underline overflow-x-hidden"
+    >
+      <div
+        *ngFor="let link of links"
+        class="flex flex-col w-full pb-4"
+        [ngClass]="hideDesktopSidebar ? 'items-center' : ''"
+      >
+        <div class="text-sm text-gray-400 py-1 px-4 sidebar-item">
+          {{ link.groupName }}
+        </div>
+        <a
+          *ngFor="let navLink of link.links"
+          [routerLink]="[navLink.url]"
+          class="flex items-center py-3 sidebar-item text-black no-underline px-4 hover:bg-blue-50 hover:text-blue-600 rounded-lg text-gray-600 transition duration-200"
+          [routerLinkActive]="'font-semibold text-blue-600 bg-blue-50'"
+          [ngClass]="hideDesktopSidebar ? 'w-fit' : 'gap-2'"
+        >
+          <fa-icon [icon]="navLink.icon" style="font-size: 1.5rem"></fa-icon>
+          {{ hideDesktopSidebar ? "" : navLink.name }}
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="absolute flex top-2 right-2">
+    <fa-icon
+      #hideSidebarDesktopIcon
+      class="transition duration-300 cursor-pointer text-gray-600"
+      (click)="hideSidebarDesktop()"
+      [icon]="hideSidebarIcon"
+      style="font-size: 2rem"
+    ></fa-icon>
+  </div>
+</div>
+
+<!--mobile-sidebar-->
+<div
+  class="flex md:hidden w-80 fixed top-0 left-0 w-full flex-col bg-white min-h-screen max-h-screen h-full items-center justify-center z-50 py-10 px-6"
+  *ngIf="activeSidebar"
+  [@sidebar]="activeSidebar"
+>
+  <div class="flex flex-col w-full overflow-y-auto items-center">
+    <div *ngFor="let link of links" class="flex flex-col w-full pb-4">
+      <div class="text-sm text-gray-400 py-1 px-4 sidebar-item">
+        {{ link.groupName }}
+      </div>
+      <a
+        *ngFor="let navLink of link.links"
+        [routerLink]="[navLink.url]"
+        class="flex items-center py-3 gap-2 sidebar-item text-black no-underline px-4 hover:bg-blue-50 hover:text-blue-600 rounded-lg text-gray-600 transition duration-200"
+        [routerLinkActive]="'font-semibold text-blue-600 bg-blue-50'"
+      >
+        <fa-icon [icon]="navLink.icon" style="font-size: 1.5rem"></fa-icon>
+        {{ navLink.name }}
+      </a>
+    </div>
+  </div>
+  <div (click)="hideSidebar()" class="absolute top-2 right-5">
+    <fa-icon
+      class="cursor-pointer transition duration-300 hover:text-gray-600"
+      [icon]="faMarkIcon"
+      style="font-size: 2rem"
+    ></fa-icon>
+  </div>
+</div>
+<div
+  class="flex md:hidden absolute top-3 left-4"
+  appClickOutside
+  (clickOutside)="hideSidebar()"
+>
+  <fa-icon
+    class="cursor-pointer hover:text-gray-600"
+    (click)="clickSidebarButton()"
+    [icon]="faBarsIcon"
+    style="font-size: 2rem"
+  ></fa-icon>
+</div>
+<div
+  [@opacity]
+  *ngIf="activeSidebar"
+  class="w-full h-full md:hidden flex fixed inset-0"
+  style="background-color: rgba(0, 0, 0, 0.3)"
+></div>

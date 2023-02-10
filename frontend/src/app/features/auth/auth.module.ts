@@ -10,6 +10,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { SharedModule } from '../../shared/shared.module';
 import { ButtonModule } from 'primeng/button';
 import { RegisterComponent } from './pages/register/register.component';
+import { CoreModule } from '../../core/core.module';
 
 @NgModule({
   declarations: [LoginComponent, RegisterComponent],
@@ -23,6 +24,7 @@ import { RegisterComponent } from './pages/register/register.component';
     InputNumberModule,
     SharedModule,
     ButtonModule,
+    CoreModule,
   ],
 })
 export class AuthModule {}

@@ -1,4 +1,4 @@
-<div class="w-full bg-gray-100 px-2 md:px-20">
+<div class="bg-gray-100 px-2 lg:px-20 md:px-5 w-full">
   <!--  desktop menu-->
   <div class="hidden md:flex flex-row justify-between">
     <div class="flex flex-row gap-x-4 items-center justify-center">
@@ -51,8 +51,8 @@
         >
           <a
             class="py-4 px-2 hover:text-gray-600 menu-item text-black no-underline"
-            routerLink="user/addNewPost"
-            >Add new post</a
+            routerLink="/user"
+            >User panel</a
           >
           <div
             class="py-4 px-2 hover:text-gray-600 menu-item"
@@ -74,7 +74,7 @@
       #mobileMenuIcon
       [icon]="activeIcon"
       style="font-size: 2rem"
-      class="py-2 px-2 transition duration-300"
+      class="py-2 px-2 transition duration-300 cursor-pointer"
       (click)="clickMobileMenu()"
       appClickOutside
       (clickOutside)="clickOutsideMobileMenu()"
@@ -105,8 +105,8 @@
           >
             <a
               class="py-4 px-2 hover:text-gray-600 menu-item text-black no-underline"
-              routerLink="user/addNewPost"
-              >Add new post</a
+              routerLink="/user"
+              >User panel</a
             >
             <div
               class="py-4 px-2 hover:text-gray-600 menu-item"
@@ -126,7 +126,7 @@
 <div
   [@dropDownMenu]="activeMobileMenu"
   *ngIf="activeMobileMenu"
-  class="flex flex-col md:hidden absolute w-full h-full bg-gray-800 z-50 items-center justify-center bg-opacity-95 text-white"
+  class="flex flex-col md:hidden absolute w-full h-full bg-gray-800 z-50 items-center justify-center bg-opacity-95 text-white mobileMenuContent"
 >
   <a
     class="menuItem menu-item menuItemMobile"

@@ -1,3 +1,4 @@
+<app-navbar></app-navbar>
 <div class="w-full h-full bg-gray-300 flex py-10 sm:py-20 grow">
   <div class="w-full h-full max-w-7xl mx-auto flex flex-col gap-10">
     <div
@@ -24,14 +25,15 @@
       <div class="flex flex-col sm:self-end gap-2">
         <label>Sort by</label>
         <p-dropdown
-          styleClass="w-full"
+          styleClass="w-full w-52"
           appendTo="body"
           [options]="sortOptions"
           optionLabel="label"
           optionValue="sort"
           [(ngModel)]="sortField"
           (onChange)="changeSortField($event)"
-        ></p-dropdown>
+        >
+        </p-dropdown>
       </div>
     </div>
     <div
