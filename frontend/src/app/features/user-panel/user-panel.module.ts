@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { UserPanelRoutingModule } from './user-panel-routing.module';
 import { AddNewPostComponent } from './pages/add-new-post/add-new-post.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -15,6 +15,10 @@ import { CoreModule } from '../../core/core.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { UserPostsComponent } from './pages/user-posts/user-posts.component';
 import { UserAccountComponent } from './pages/user-account/user-account.component';
+import { TableModule } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
+import { DropdownModule } from 'primeng/dropdown';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @NgModule({
   declarations: [
@@ -35,6 +39,11 @@ import { UserAccountComponent } from './pages/user-account/user-account.componen
     EditorModule,
     CoreModule,
     FontAwesomeModule,
+    TableModule,
+    TagModule,
+    DropdownModule,
+    FormsModule,
+    MultiSelectModule,
   ],
 })
 export class UserPanelModule {}

@@ -1,6 +1,7 @@
 import {
   faGear,
   faHeart,
+  faPlus,
   faThumbsUp,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
@@ -17,6 +18,7 @@ export const SidebarLinks: {
     groupName: 'Posts',
     links: [
       { url: '/user/posts', name: 'My posts', icon: faNewspaper },
+      { url: '/user/addNewPost', name: 'New post', icon: faPlus },
       { url: '/user/likedPosts', name: 'Liked posts', icon: faThumbsUp },
       { url: '/user/followPosts', name: 'Follow posts', icon: faHeart },
     ],

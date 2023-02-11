@@ -2,6 +2,7 @@ package com.backend.backend.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Where;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,6 +20,7 @@ public class Category {
     @ManyToMany(mappedBy = "categories")
     @JsonBackReference
     @OrderBy("createdAt DESC")
+    @Where(clause = "active = 1")
     private Set<Post> posts = new HashSet<>();
 
 

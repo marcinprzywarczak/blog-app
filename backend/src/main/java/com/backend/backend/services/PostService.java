@@ -101,9 +101,9 @@ public class PostService {
             }
         } else {
             if(paginationSortSearchDto.getSearch() != null) {
-                return ResponseEntity.ok().body(this.postRepository.findAllByTitleContaining(pageable, paginationSortSearchDto.getSearch()));
+                return ResponseEntity.ok().body(this.postRepository.findAllByTitleContainingAndActiveIs(pageable, paginationSortSearchDto.getSearch(), true));
             } else {
-                return ResponseEntity.ok().body(this.postRepository.findAll(pageable));
+                return ResponseEntity.ok().body(this.postRepository.findAllByActiveIs(pageable, true));
             }
         }
     }

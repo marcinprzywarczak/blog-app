@@ -68,7 +68,7 @@ public class PostController {
         int page = postByCategoriesDto.getFirst() / postByCategoriesDto.getRows();
         Pageable pageable = PageRequest.of(page, postByCategoriesDto.getRows(), Sort.by("createdAt").descending());
         List<Category> categories = this.categoryRepository.findAllById(postByCategoriesDto.getCategoryIds());
-        return this.postRepository.findAllByCategoriesIn(new HashSet<>(categories), pageable);
+        return this.postRepository.findAllByCategoriesInAndActiveIs(new HashSet<>(categories), pageable, true);
 
     }
 
@@ -83,11 +83,45 @@ public class PostController {
                 .body(this.postRepository.findAllByUser(user, pageable));
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/userPosts")
+    public ResponseEntity<?> getUserPosts(Authentication authentication, @RequestBody @Valid AngularLazyLoadDto angularLazyLoadDto) {
+        int page = (angularLazyLoadDto.getFirst() + 1) / angularLazyLoadDto.getRows();
+        Pageable pageable = PageRequest.of(page, angularLazyLoadDto.getRows(), Sort.by(angularLazyLoadDto.getSortOrder() == 1 ? Sort.Direction.ASC : Sort.Direction.DESC, angularLazyLoadDto.getSortField()));
+        User user = userRepository.findByEmail(authentication.getName());
+        if(angularLazyLoadDto.getFilters().get("categories") != null && angularLazyLoadDto.getFilters().get("categories").get(0).getValue() != null) {
+            List<Long> categoryIds = new ArrayList<>();
+            categoryIds.add(Long.parseLong(String.valueOf(angularLazyLoadDto.getFilters().get("categories").get(0).getValue())));
+            List<Category> categories = this.categoryRepository.findAllById(categoryIds);
+            if(angularLazyLoadDto.getFilters().get("active") != null) {
+                if(angularLazyLoadDto.getFilters().get("active").get(0).getValue() != null) {
+                    return ResponseEntity.ok().body(this.postRepository.findAllByCategoriesInAndActiveIsAndUser(new HashSet<>(categories), pageable, (Boolean) angularLazyLoadDto.getFilters().get("active").get(0).getValue(), user));
+                }
+                else {
+                    return ResponseEntity.ok().body(this.postRepository.findAllByCategoriesInAndUser(new HashSet<>(categories), pageable, user));
+                }
+            } else {
+                return ResponseEntity.ok().body(this.postRepository.findAllByCategoriesInAndUser(new HashSet<>(categories), pageable, user));
+            }
+
+        } else if(angularLazyLoadDto.getFilters().get("active") != null) {
+            if(angularLazyLoadDto.getFilters().get("active").get(0).getValue() != null) {
+                return ResponseEntity.ok().body(this.postRepository.findAllByActiveIsAndUser(pageable, (Boolean) angularLazyLoadDto.getFilters().get("active").get(0).getValue(), user));
+            } else {
+                return ResponseEntity.ok()
+                        .body(this.postRepository.findAllByUser(user, pageable));
+            }
+        }
+
+        return ResponseEntity.ok()
+                .body(this.postRepository.findAllByUser(user, pageable));
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getPost(@PathVariable long id, Authentication authentication) {
         Optional<Post> post = this.postRepository.findById(id);
-        if(post.isPresent()){
+        if(post.isPresent() && post.get().isActive()){
             if(authentication != null) {
                 User user = this.userRepository.findByEmail(authentication.getName());
                 Like like = this.likeRepository.findAllByPostAndUser(post.get(), user);

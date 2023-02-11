@@ -11,6 +11,7 @@ import { CategoryWithPosts } from '../models/category-with-posts';
 import { PostsByCategories } from '../models/postsByCategories';
 import { PaginationWithSort } from '../models/paginationWithSort';
 import { PaginationSortSearch } from '../models/paginationSortSearch';
+import { LazyLoadEvent } from 'primeng/api';
 
 @Injectable({
   providedIn: 'root',
@@ -57,5 +58,12 @@ export class PostService {
 
   public getPost(id: number): Observable<Post> {
     return this.http.get<Post>(`${environment.apiUrl}/api/post/${id}`);
+  }
+
+  public getUserPosts(lazyLoad: LazyLoadEvent): Observable<Pageable<Post>> {
+    return this.http.post<Pageable<Post>>(
+      `${environment.apiUrl}/api/post/userPosts`,
+      lazyLoad
+    );
   }
 }

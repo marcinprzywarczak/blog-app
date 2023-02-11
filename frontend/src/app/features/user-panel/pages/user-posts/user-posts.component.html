@@ -1,1 +1,149 @@
-<div class="w-full h-full flex flex-col grow bg-red-400"></div>
+<div
+  class="w-full h-full flex flex-col grow px-10 py-20 items-center justify-center"
+  [@table]
+>
+  <p-table
+    class="w-full table"
+    [value]="posts"
+    [columns]="columns"
+    dataKey="id"
+    [paginator]="true"
+    [rows]="5"
+    [lazy]="true"
+    (onLazyLoad)="getPosts($event)"
+    [totalRecords]="totalRecords"
+    [loading]="loading"
+    sortField="createdAt"
+    [sortOrder]="-1"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <ng-container *ngFor="let column of columns">
+          <ng-container [ngSwitch]="column.column">
+            <th *ngSwitchCase="'id'" [pSortableColumn]="column.column">
+              {{ column.columnName }}
+              <p-sortIcon [field]="column.column"></p-sortIcon>
+            </th>
+            <th *ngSwitchCase="'title'" [pSortableColumn]="column.column">
+              {{ column.columnName }}
+              <p-sortIcon [field]="column.column"></p-sortIcon>
+            </th>
+            <th *ngSwitchCase="'createdAt'" [pSortableColumn]="column.column">
+              {{ column.columnName }}
+              <p-sortIcon [field]="column.column"></p-sortIcon>
+            </th>
+            <th *ngSwitchCase="'categories'">
+              {{ column.columnName }}
+              <p-columnFilter
+                [field]="column.column"
+                matchMode="equal"
+                display="menu"
+                [showMenu]="true"
+                [showOperator]="false"
+                [showAddButton]="false"
+                [showApplyButton]="true"
+                [showMatchModes]="false"
+              >
+                <ng-template
+                  pTemplate="filter"
+                  let-value
+                  let-filter="filterCallback"
+                >
+                  <p-dropdown
+                    [ngModel]="value"
+                    placeholder="Any"
+                    appendTo="body"
+                    [options]="categoriesOptions"
+                    optionValue="id"
+                    optionLabel="name"
+                    (onChange)="filter($event.value)"
+                  >
+                  </p-dropdown>
+                </ng-template>
+              </p-columnFilter>
+            </th>
+            <th *ngSwitchCase="'active'">
+              {{ column.columnName }}
+              <p-columnFilter
+                [field]="column.column"
+                matchMode="equal"
+                display="menu"
+                [showMenu]="true"
+                [showOperator]="false"
+                [showAddButton]="false"
+                [showApplyButton]="true"
+                [showMatchModes]="false"
+              >
+                <ng-template
+                  pTemplate="filter"
+                  let-value
+                  let-filter="filterCallback"
+                >
+                  <p-dropdown
+                    [ngModel]="value"
+                    placeholder="Any"
+                    appendTo="body"
+                    [options]="stateOptions"
+                    optionValue="value"
+                    optionLabel="name"
+                    (onChange)="filter($event.value)"
+                  >
+                    <ng-template let-option pTemplate="item">
+                      <p-tag
+                        [severity]="option.value ? 'success' : 'danger'"
+                        [value]="option.name"
+                      ></p-tag>
+                    </ng-template>
+                  </p-dropdown>
+                </ng-template>
+              </p-columnFilter>
+            </th>
+            <th *ngSwitchDefault>
+              {{ column.columnName }}
+            </th>
+          </ng-container>
+        </ng-container>
+        <th class="w-2"></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-post>
+      <tr>
+        <ng-container *ngFor="let column of columns">
+          <ng-container [ngSwitch]="column.column">
+            <td *ngSwitchCase="'categories'">
+              <ng-container
+                *ngFor="let category of post[column.column]; let i = index"
+              >
+                {{ category.name
+                }}{{ i !== post[column.column].length - 1 ? "," : "" }}
+              </ng-container>
+            </td>
+            <td *ngSwitchCase="'createdAt'">
+              {{ post[column.column] | date : "dd-MM-yyyy HH:mm:ss" }}
+            </td>
+            <td *ngSwitchCase="'active'">
+              <p-tag
+                [severity]="post[column.column] ? 'success' : 'danger'"
+                [value]="post[column.column] ? 'ACTIVE' : 'INACTIVE'"
+              ></p-tag>
+            </td>
+            <td *ngSwitchDefault>{{ post[column.column] }}</td>
+          </ng-container>
+        </ng-container>
+        <td>
+          <div class="flex flex-row gap-2 justify-center items-center">
+            <i
+              class="pi pi-pencil p-2 rounded-md hover:bg-gray-100 cursor-pointer"
+              style="font-size: 1.2rem"
+            ></i>
+            <i
+              class="pi p-2 rounded-md hover:bg-gray-100 cursor-pointer"
+              [ngClass]="post['active'] ? 'pi-minus-circle' : 'pi-replay'"
+              style="font-size: 1.2rem"
+            ></i>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

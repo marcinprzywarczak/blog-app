@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PostService } from '../../../../core/services/post.service';
 import { Post } from '../../../../core/models/post';
 import { CategoryWithPosts } from '../../../../core/models/category-with-posts';
-import { finalize } from 'rxjs';
+import { finalize, Observable } from 'rxjs';
 import { DropDownAnimation } from '../../../../core/animations/dropdown-animation';
 
 @Component({

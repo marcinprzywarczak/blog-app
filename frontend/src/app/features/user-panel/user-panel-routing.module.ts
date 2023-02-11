@@ -10,7 +10,7 @@ const routes: Routes = [
     path: '',
     component: UserPanelMainComponent,
     children: [
-      { path: '', component: AddNewPostComponent },
+      { path: '', redirectTo: 'posts', pathMatch: 'full' },
       { path: 'addNewPost', component: AddNewPostComponent },
       { path: 'posts', component: UserPostsComponent },
       { path: 'account', component: UserAccountComponent },
