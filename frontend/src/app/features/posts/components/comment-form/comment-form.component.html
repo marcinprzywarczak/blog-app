@@ -1,4 +1,4 @@
-<div class="flex w-full gap-6">
+<div class="flex w-full gap-6" *ngIf="user; else notLogged">
   <p-avatar
     *ngIf="user"
     [image]="user.avatarUrl"
@@ -25,6 +25,7 @@
     <div class="flex flex-col w-full">
       <span class="p-float-label">
         <textarea
+          rows="4"
           class="w-full"
           type="text"
           id="description"
@@ -39,3 +40,23 @@
     </div>
   </form>
 </div>
+
+<ng-template #notLogged>
+  <div
+    class="w-full flex flex-col gap-4 bg-gray-100 rounded-md px-5 py-8 items-center justify-center"
+  >
+    To add comments you must first log into your account or create new account.
+    <div class="flex flex-row gap-4">
+      <a routerLink="/auth/login" class="no-underline">
+        <button pButton label="Login"></button>
+      </a>
+      <a routerLink="/auth/register" class="no-underline">
+        <button
+          pButton
+          class="p-button-secondary"
+          label="Create account"
+        ></button
+      ></a>
+    </div>
+  </div>
+</ng-template>
