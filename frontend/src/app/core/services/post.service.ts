@@ -56,14 +56,38 @@ export class PostService {
     });
   }
 
+  public updatePost(updatePost: FormData, postId: number) {
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'multipart/form-data');
+    headers.append('Accept', 'application/json');
+    return this.http.put<any>(
+      `${environment.apiUrl}/api/post/${postId}/update`,
+      updatePost,
+      {
+        headers: headers,
+      }
+    );
+  }
+
   public getPost(id: number): Observable<Post> {
     return this.http.get<Post>(`${environment.apiUrl}/api/post/${id}`);
+  }
+
+  public getPostToEdit(id: number): Observable<Post> {
+    return this.http.get<Post>(`${environment.apiUrl}/api/post/edit/${id}`);
   }
 
   public getUserPosts(lazyLoad: LazyLoadEvent): Observable<Pageable<Post>> {
     return this.http.post<Pageable<Post>>(
       `${environment.apiUrl}/api/post/userPosts`,
       lazyLoad
+    );
+  }
+
+  public updatePostState(id: number) {
+    return this.http.put(
+      `${environment.apiUrl}/api/post/changeActive/${id}`,
+      {}
     );
   }
 }

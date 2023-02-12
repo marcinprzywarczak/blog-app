@@ -9,7 +9,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { httpInterceptorProviders } from './core/interceptors/http-request.interceptor';
 import { CoreModule } from './core/core.module';
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { httpAuthInterceptor } from './core/interceptors/auth.interceptor';
 import { DialogService } from 'primeng/dynamicdialog';
@@ -33,6 +33,7 @@ import { ScrollTopModule } from 'primeng/scrolltop';
     httpAuthInterceptor,
     MessageService,
     DialogService,
+    ConfirmationService,
   ],
   bootstrap: [AppComponent],
 })

@@ -3,6 +3,7 @@ package com.backend.backend.services;
 import com.backend.backend.configs.files.FilesStorageService;
 import com.backend.backend.dto.NewPostDto;
 import com.backend.backend.dto.PaginationSortSearchPostDto;
+import com.backend.backend.dto.UpdatePostDto;
 import com.backend.backend.models.Category;
 import com.backend.backend.models.Photo;
 import com.backend.backend.models.Post;
@@ -23,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -65,20 +67,56 @@ public class PostService {
         post.setActive(true);
         post.setVisitCounter(0);
         Post savePost = this.postRepository.save(post);
+        if(photos != null) {
+            Set<Photo> photoSet = this.getPhotos(photos, savePost);
 
-        Set<Photo> photoSet = new HashSet<>();
-        for(MultipartFile photo:photos){
-            fileName = storageService.save(photo);
-            fileUrl = this.serverUrl + "api/photo/" + fileName;
-            Photo photo1 = new Photo();
-            photo1.setPhotoName(fileName);
-            photo1.setPhotoUrl(fileUrl);
-            photo1.setPost(savePost);
-            photoSet.add(photoRepository.save(photo1));
+            savePost.setPhotos(photoSet);
         }
 
-        savePost.setPhotos(photoSet);
         return savePost;
+    }
+
+
+    public Post updatePost(long id, UpdatePostDto updatePostDto, MultipartFile mainPhoto, MultipartFile[] photos){
+
+        Optional<Post> optionalPost = this.postRepository.findById(id);
+        if(optionalPost.isEmpty())
+            return null;
+        Post post = optionalPost.get();
+        if(updatePostDto.isPhotoChanged()) {
+            if(!post.getMainPhotoName().equals("default_photo.png")) {
+                this.storageService.delete(post.getMainPhotoName());
+            }
+            String fileName = storageService.save(mainPhoto);
+            String fileUrl = this.serverUrl + "api/photo/" + fileName;
+            post.setMainPhotoName(fileName);
+            post.setMainPhotoUrl(fileUrl);
+
+            if(post.getPhotos() != null){
+                for(Photo photo: post.getPhotos()) {
+                    this.storageService.delete(photo.getPhotoName());
+                    this.photoRepository.delete(photo);
+                }
+            }
+
+            if(photos != null) {
+                Set<Photo> photoSet = this.getPhotos(photos, post);
+                post.setPhotos(photoSet);
+            }
+        }
+
+        Set<Category> categories = new HashSet<>();
+        for(Long categoryId: updatePostDto.getCategories()) {
+            Category category = this.categoryRepository.findById(categoryId).orElseThrow(() -> new RuntimeException("Error: category not found"));
+            categories.add(category);
+        }
+
+        post.setTitle(updatePostDto.getTitle());
+        post.setDescription(updatePostDto.getDescription());
+        post.setContent(updatePostDto.getContent());
+        post.setCategories(categories);
+        return this.postRepository.save(post);
+
     }
 
     public ResponseEntity<Page<Post>> getAllPostPaginationSortAndSearch(PaginationSortSearchPostDto paginationSortSearchDto){
@@ -106,5 +144,23 @@ public class PostService {
                 return ResponseEntity.ok().body(this.postRepository.findAllByActiveIs(pageable, true));
             }
         }
+    }
+
+
+    public Set<Photo> getPhotos(MultipartFile[] photos, Post post){
+        Set<Photo> photoSet = new HashSet<>();
+        String fileName = "";
+        String fileUrl = "";
+        for(MultipartFile photo:photos){
+            fileName = storageService.save(photo);
+            fileUrl = this.serverUrl + "api/photo/" + fileName;
+            Photo photo1 = new Photo();
+            photo1.setPhotoName(fileName);
+            photo1.setPhotoUrl(fileUrl);
+            photo1.setPost(post);
+            photoSet.add(photoRepository.save(photo1));
+        }
+
+        return photoSet;
     }
 }

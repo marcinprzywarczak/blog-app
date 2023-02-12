@@ -15,6 +15,7 @@
     [loading]="loading"
     sortField="createdAt"
     [sortOrder]="-1"
+    [rowHover]="true"
   >
     <ng-template pTemplate="header">
       <tr>
@@ -107,7 +108,7 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-post>
-      <tr>
+      <tr class="cursor-pointer" [routerLink]="['/posts/details/', post['id']]">
         <ng-container *ngFor="let column of columns">
           <ng-container [ngSwitch]="column.column">
             <td *ngSwitchCase="'categories'">
@@ -133,10 +134,14 @@
         <td>
           <div class="flex flex-row gap-2 justify-center items-center">
             <i
+              appClickStopPropagation
+              [routerLink]="['/user/post/edit', post['id']]"
               class="pi pi-pencil p-2 rounded-md hover:bg-gray-100 cursor-pointer"
               style="font-size: 1.2rem"
             ></i>
             <i
+              appClickStopPropagation
+              (click)="confirm(post['id'], post['active'])"
               class="pi p-2 rounded-md hover:bg-gray-100 cursor-pointer"
               [ngClass]="post['active'] ? 'pi-minus-circle' : 'pi-replay'"
               style="font-size: 1.2rem"
@@ -147,3 +152,8 @@
     </ng-template>
   </p-table>
 </div>
+<p-confirmDialog
+  [style]="{ width: '30rem' }"
+  [baseZIndex]="10000"
+  rejectButtonStyleClass="p-button-text"
+></p-confirmDialog>

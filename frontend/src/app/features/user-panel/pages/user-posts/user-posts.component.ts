@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PostService } from '../../../../core/services/post.service';
 import { Post } from '../../../../core/models/post';
-import { LazyLoadEvent } from 'primeng/api';
+import { ConfirmationService, LazyLoadEvent } from 'primeng/api';
 import { Pagination } from '../../../../core/models/pagination';
 import {
   animate,
@@ -14,6 +14,7 @@ import {
 } from '@angular/animations';
 import { Category } from '../../../../core/models/category';
 import { CategoryService } from '../../../../core/services/category.service';
+import { AlertService } from '../../../../core/services/alert.service';
 
 @Component({
   selector: 'app-user-posts',
@@ -72,7 +73,9 @@ export class UserPostsComponent implements OnInit {
   ];
   constructor(
     private postService: PostService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private alertService: AlertService,
+    private confirmationService: ConfirmationService
   ) {}
 
   ngOnInit() {
@@ -99,5 +102,36 @@ export class UserPostsComponent implements OnInit {
       },
       error: (err) => {},
     });
+  }
+
+  updatePostActive(id: number) {
+    this.postService.updatePostState(id).subscribe({
+      next: () => {
+        if (this.posts.find((x) => x.id === id) !== undefined) {
+          this.posts.find((x) => x.id === id)!.active = !this.posts.find(
+            (x) => x.id === id
+          )!.active;
+        }
+        this.alertService.showSuccess('Post successfully updated!');
+      },
+      error: (err) => {
+        this.alertService.showSuccess('Error while updating post');
+      },
+    });
+  }
+
+  confirm(id: number, active: boolean) {
+    this.confirmationService.confirm({
+      message: `Are you sure that you want to ${
+        active ? 'deactivate' : 'activate'
+      } this post?`,
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.updatePostActive(id);
+        console.log('accept');
+      },
+    });
+    console.log(id);
   }
 }

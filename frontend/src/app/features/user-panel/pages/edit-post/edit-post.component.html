@@ -1,0 +1,191 @@
+<div class="w-full h-full flex flex-col py-20">
+  <div class="w-full h-full max-w-5xl flex flex-col mx-auto px-5">
+    <form
+      [formGroup]="form"
+      (ngSubmit)="onSubmit()"
+      class="flex flex-col gap-6"
+    >
+      <div class="flex flex-col gap-2">
+        <label for="title">Title</label>
+        <input id="title" pInputText class="w-full" formControlName="title" />
+        <div
+          *ngIf="
+            submitted ||
+            form.controls['title'].touched ||
+            form.controls['title'].dirty
+          "
+          class="text-red-600 font-semibold"
+        >
+          <div *ngIf="form.controls['title'].errors?.['required']">
+            Title is required!
+          </div>
+          <div *ngIf="form.controls['title'].errors?.['maxlength']">
+            Max length is 255 chars.
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label for="description">Description</label>
+        <textarea
+          id="description"
+          pInputTextarea
+          class="w-full"
+          rows="5"
+          formControlName="description"
+        ></textarea>
+        <div
+          *ngIf="
+            submitted ||
+            form.controls['description'].touched ||
+            form.controls['description'].dirty
+          "
+          class="text-red-600 font-semibold"
+        >
+          <div *ngIf="form.controls['description'].errors?.['required']">
+            Description is required!
+          </div>
+          <div *ngIf="form.controls['description'].errors?.['maxlength']">
+            Max length is 500 chars.
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label>Categories</label>
+        <div class="flex flex-row flex-wrap gap-3">
+          <div class="field-checkbox" *ngFor="let category of categories">
+            <p-checkbox
+              class="pr-2"
+              name="categories[]"
+              [formControl]="$any(form.controls['categories'])"
+              [value]="category.id"
+              [inputId]="category.id.toString()"
+            ></p-checkbox>
+            <label for="{{ category.id.toString() }}">{{
+              category.name
+            }}</label>
+          </div>
+        </div>
+        <div
+          *ngIf="
+            submitted ||
+            form.controls['categories'].touched ||
+            form.controls['categories'].dirty
+          "
+          class="text-red-600 font-semibold"
+        >
+          <div *ngIf="form.controls['categories'].errors?.['required']">
+            Categories is required!
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label>Content</label>
+        <p-editor
+          formControlName="content"
+          class="w-full"
+          [style]="{ height: '320px' }"
+        >
+          <ng-template pTemplate="header">
+            <span class="ql-formats">
+              <select class="ql-header"></select>
+            </span>
+
+            <span class="ql-formats">
+              <button class="ql-bold" aria-label="Bold"></button>
+              <button class="ql-italic" aria-label="Italic"></button>
+              <button class="ql-underline" aria-label="Underline"></button>
+              <button class="ql-strike" aria-label="Strike"></button>
+            </span>
+
+            <span class="ql-formats">
+              <select class="ql-color"></select>
+            </span>
+            <span class="ql-formats">
+              <select class="ql-background"></select>
+            </span>
+            <span class="ql-formats">
+              <select class="ql-align"></select>
+            </span>
+
+            <span class="ql-formats">
+              <button class="ql-list" value="ordered"></button>
+              <button class="ql-list" value="bullet"></button>
+            </span>
+
+            <span class="ql-formats">
+              <button aria-label="Link" class="ql-link"></button>
+            </span>
+          </ng-template>
+        </p-editor>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label>Main photo</label>
+        <div class="photo-input">
+          <label
+            for="mainPhoto"
+            class="photo-input-label"
+            [ngClass]="[
+              mainPhotoSrc !== '' ? 'hidden' : ' flex',
+              mainPhotoSrc === '' && submitted ? 'border border-red-600' : ''
+            ]"
+            ><i class="pi pi-plus-circle text-xl"></i
+          ></label>
+          <input
+            id="mainPhoto"
+            class="hidden"
+            type="file"
+            (change)="onChangeMainPhoto($event)"
+          />
+          <ng-container *ngIf="mainPhotoSrc">
+            <div class="relative w-fit">
+              <img [src]="mainPhotoSrc" height="100px" />
+              <i
+                class="pi pi-times photo-input-delete"
+                (click)="deleteMainPhoto()"
+              ></i>
+            </div>
+          </ng-container>
+        </div>
+        <ng-container *ngIf="submitted && mainPhotoSrc === ''">
+          <div class="font-semibold text-red-600">Main photo is required!</div>
+        </ng-container>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label>Photos</label>
+        <div class="flex flex-row flex-wrap gap-2">
+          <div class="photo-input" *ngFor="let photo of photos; let i = index">
+            <label
+              for="photo{{ i }}"
+              class="photo-input-label"
+              [ngClass]="photo.src !== '' ? 'hidden' : ' flex'"
+              ><i class="pi pi-plus-circle text-xl"></i
+            ></label>
+            <input
+              id="photo{{ i }}"
+              class="hidden"
+              type="file"
+              (change)="onChangePhoto($event)"
+            />
+            <ng-container *ngIf="photo.src">
+              <div class="relative">
+                <img [src]="photo.src" alt="" class="w-full" />
+                <i
+                  class="pi pi-times photo-input-delete"
+                  (click)="deletePhoto(photo.src)"
+                ></i>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="flex self-end">
+        <button pButton label="Update"></button>
+      </div>
+    </form>
+  </div>
+</div>

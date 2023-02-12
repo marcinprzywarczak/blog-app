@@ -58,9 +58,16 @@ public class PostController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping(value = "/add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Post addPost(Authentication authentication, @Valid NewPostDto newPostDto, @RequestParam(value = "mainPhoto", required = true)MultipartFile mainPhoto, @RequestParam(value = "photos[]", required = true) MultipartFile[] photos) {
+    public Post addPost(Authentication authentication, @Valid NewPostDto newPostDto, @RequestParam(value = "mainPhoto", required = true)MultipartFile mainPhoto, @RequestParam(value = "photos[]", required = false) MultipartFile[] photos) {
         User user = userRepository.findByEmail(authentication.getName());
         return this.postService.addNewPost(user, newPostDto, mainPhoto, photos);
+    }
+
+    @PreAuthorize("isAuthenticated() and @postSecurity.isAuthorOfPost(authentication, #id)")
+    @PutMapping(value = "/{id}/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Post updatePost(@PathVariable long id, Authentication authentication, @Valid UpdatePostDto updatePostDto, @RequestParam(value = "mainPhoto", required = true)MultipartFile mainPhoto, @RequestParam(value = "photos[]", required = false) MultipartFile[] photos) {
+        User user = userRepository.findByEmail(authentication.getName());
+        return this.postService.updatePost(id, updatePostDto, mainPhoto, photos);
     }
 
     @PostMapping("/categories")
@@ -131,6 +138,28 @@ public class PostController {
             }
 
             return ResponseEntity.ok().body(post.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @PreAuthorize("isAuthenticated() and @postSecurity.isAuthorOfPost(authentication, #id)")
+    @GetMapping("/edit/{id}")
+    public ResponseEntity<?> getPostToEdit(@PathVariable long id, Authentication authentication) {
+        Optional<Post> post = this.postRepository.findById(id);
+        if(post.isPresent()) {
+            return ResponseEntity.ok().body(post.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @PreAuthorize("isAuthenticated() and @postSecurity.isAuthorOfPost(authentication, #id)")
+    @PutMapping("/changeActive/{id}")
+    public ResponseEntity<?> updatePostActive(@PathVariable long id, Authentication authentication) {
+        Optional<Post> optionalPost = this.postRepository.findById(id);
+        if(optionalPost.isPresent()) {
+            Post post = optionalPost.get();
+            post.setActive(!post.isActive());
+            return ResponseEntity.ok().body(this.postRepository.save(post));
         } else {
             return ResponseEntity.notFound().build();
         }

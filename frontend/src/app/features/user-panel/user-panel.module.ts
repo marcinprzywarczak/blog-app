@@ -19,6 +19,8 @@ import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { DropdownModule } from 'primeng/dropdown';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { EditPostComponent } from './pages/edit-post/edit-post.component';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
     UserPanelMainComponent,
     UserPostsComponent,
     UserAccountComponent,
+    EditPostComponent,
   ],
   imports: [
     CommonModule,
@@ -44,6 +47,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
     DropdownModule,
     FormsModule,
     MultiSelectModule,
+    ConfirmDialogModule,
   ],
 })
 export class UserPanelModule {}
