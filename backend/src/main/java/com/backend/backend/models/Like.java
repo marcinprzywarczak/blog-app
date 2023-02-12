@@ -17,7 +17,7 @@ public class Like {
 
     @ManyToOne
     @JoinColumn(name = "post_id", nullable = false)
-    @JsonBackReference
+    @JsonManagedReference
     private Post post;
 
     @ManyToOne

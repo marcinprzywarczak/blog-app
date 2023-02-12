@@ -19,8 +19,8 @@ export const SidebarLinks: {
     links: [
       { url: '/user/posts', name: 'My posts', icon: faNewspaper },
       { url: '/user/addNewPost', name: 'New post', icon: faPlus },
-      { url: '/user/likedPosts', name: 'Liked posts', icon: faThumbsUp },
-      { url: '/user/followPosts', name: 'Follow posts', icon: faHeart },
+      { url: '/user/likes', name: 'Liked posts', icon: faThumbsUp },
+      { url: '/user/follow', name: 'Follow posts', icon: faHeart },
     ],
   },
   {

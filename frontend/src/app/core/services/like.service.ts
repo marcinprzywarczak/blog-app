@@ -29,4 +29,11 @@ export class LikeService {
       `${environment.apiUrl}/api/like/post/${postId}`
     );
   }
+
+  public getUserLikedPosts(pagination: Pagination): Observable<Pageable<Like>> {
+    return this.http.post<Pageable<Like>>(
+      `${environment.apiUrl}/api/like/user/likes`,
+      pagination
+    );
+  }
 }

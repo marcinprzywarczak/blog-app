@@ -29,7 +29,18 @@
       class="h-auto max-w-full w-fit max-h-screen"
     />
     <div class="flex flex-col px-5">
-      <div class="font-bold text-4xl text-justify py-6">{{ post.title }}</div>
+      <div class="flex self-start flex-wrap gap-2 uppercase">
+        <a
+          [routerLink]="['/posts/category', category.name]"
+          class="py-1 px-2 bg-gray-200 text-xs rounded-full no-underline text-gray-600 hover:text-gray-200 hover:bg-gray-600 transition duration-300"
+          *ngFor="let category of post.categories"
+        >
+          {{ category.name }}
+        </a>
+      </div>
+      <div class="font-bold text-4xl text-justify pb-6 pt-2">
+        {{ post.title }}
+      </div>
       <div class="text-justify py-6">{{ post.description }}</div>
       <div [innerHTML]="post.content"></div>
     </div>

@@ -10,7 +10,6 @@ export interface Post {
   createdAt: Date;
   description: string;
   id: number;
-  likes: Like[];
   mainPhotoName: string;
   mainPhotoUrl: string;
   photos: Photo[];

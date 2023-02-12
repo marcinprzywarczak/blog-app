@@ -19,7 +19,7 @@ export class MainPageComponent implements OnInit {
   mostPopularCategoriesWithPosts: CategoryWithPosts[];
   constructor(private postService: PostService) {}
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit() {
     this.responsiveOptions = [
       {
         breakpoint: '1060px',
@@ -32,7 +32,6 @@ export class MainPageComponent implements OnInit {
         numScroll: 1,
       },
     ];
-    await new Promise((f) => setTimeout(f, 2000));
     this.postService
       .getMostPopularCategoriesWithPosts()
       .pipe(finalize(() => (this.dataLoaded = true)))

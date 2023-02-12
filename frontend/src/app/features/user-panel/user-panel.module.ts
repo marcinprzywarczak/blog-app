@@ -21,6 +21,11 @@ import { DropdownModule } from 'primeng/dropdown';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { EditPostComponent } from './pages/edit-post/edit-post.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { UserLikedPostsComponent } from './pages/user-liked-posts/user-liked-posts.component';
+import { SharedModule } from '../../shared/shared.module';
+import { PaginatorModule } from 'primeng/paginator';
+import { UserFollowPostsComponent } from './pages/user-follow-posts/user-follow-posts.component';
+import { UserSettingsComponent } from './pages/user-settings/user-settings.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +35,9 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     UserPostsComponent,
     UserAccountComponent,
     EditPostComponent,
+    UserLikedPostsComponent,
+    UserFollowPostsComponent,
+    UserSettingsComponent,
   ],
   imports: [
     CommonModule,
@@ -48,6 +56,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     FormsModule,
     MultiSelectModule,
     ConfirmDialogModule,
+    SharedModule,
+    PaginatorModule,
   ],
 })
 export class UserPanelModule {}

@@ -1,11 +1,14 @@
 <app-navbar></app-navbar>
-<div class="w-full h-full bg-gray-400 flex grow flex-col">
+<div class="w-full h-full bg-gray-50 flex grow flex-col" [@dropDownMenu]="true">
   <div
-    class="w-full h-full max-w-5xl flex flex-col py-20 mx-auto items-center justify-center grow gap-8"
+    class="w-full h-full max-w-5xl flex flex-row flex-wrap py-20 mx-auto items-center justify-center grow gap-8 menu-item"
   >
     <ng-container *ngFor="let category of categories">
       <a
-        class="text-xl no-underline text-black"
+        [ngClass]="
+          category.name === 'health&fitness' ? 'health' : category.name
+        "
+        class="uppercase rounded-md text-2xl no-underline text-white w-60 h-60 flex items-center justify-center bg-blue-50 hover:scale-105 font-bold hover:underline transition duration-300"
         [routerLink]="['/posts/category', category.name]"
         >{{ category.name }}</a
       >

@@ -1,46 +1,58 @@
 <app-navbar></app-navbar>
-<div class="w-full h-full max-w-7xl mx-auto flex flex-col pt-20 gap-12">
-  <h1 class="m-0 text-3xl text-center">
-    Discover most popular categories in our blog
-  </h1>
-  <ng-container *ngIf="dataLoaded; else loadingData">
-    <div
-      *ngFor="let category of mostPopularCategoriesWithPosts"
-      class="flex flex-col w-full gap-4 border-b-4 border-gray-200 pb-12"
-    >
-      <div class="uppercase text-center text-2xl font-semibold">
-        {{ category.name }}
-        <div class="text-xl font-normal italic">
-          ({{ category.postCount }} posts)
+<div class="w-full h-full bg-gray-50">
+  <div class="w-full h-full mx-auto flex flex-col py-20 gap-12">
+    <h1 class="m-0 text-3xl text-center">
+      Most popular categories on the blog
+    </h1>
+    <ng-container *ngIf="dataLoaded; else loadingData">
+      <div
+        *ngFor="let category of mostPopularCategoriesWithPosts"
+        class="flex flex-col w-full"
+      >
+        <div
+          class="w-full mx-auto flex flex-col items-center justify-center gap-4 text-white"
+        >
+          <div
+            class="uppercase text-center text-2xl font-semibold w-full py-36"
+            [ngClass]="
+              category.name === 'health&fitness' ? 'health' : category.name
+            "
+          >
+            {{ category.name }}
+            <div class="text-xl font-normal italic">
+              ({{ category.postCount }} posts)
+            </div>
+          </div>
+          <p-carousel
+            class="w-full max-w-7xl -mt-32"
+            [value]="category.posts"
+            [numVisible]="3"
+            [numScroll]="3"
+            [circular]="false"
+            [responsiveOptions]="responsiveOptions"
+            [@dropDownMenu]
+          >
+            <ng-template
+              let-post
+              pTemplate="item"
+              class="flex items-center justify-center"
+            >
+              <app-post-card
+                class="flex justify-center h-full"
+                [post]="post"
+              ></app-post-card>
+            </ng-template>
+          </p-carousel>
+          <a
+            [routerLink]="['posts/category', category.name]"
+            class="text-black text-center underline underline-offset-4 font-semibold"
+          >
+            Show more {{ category.name }} posts
+          </a>
         </div>
       </div>
-      <p-carousel
-        [value]="category.posts"
-        [numVisible]="3"
-        [numScroll]="3"
-        [circular]="false"
-        [responsiveOptions]="responsiveOptions"
-      >
-        <ng-template
-          let-post
-          pTemplate="item"
-          class="flex items-center justify-center"
-        >
-          <app-post-card
-            [@dropDownMenu]
-            class="flex justify-center h-full"
-            [post]="post"
-          ></app-post-card>
-        </ng-template>
-      </p-carousel>
-      <a
-        [routerLink]="['posts/category', category.name]"
-        class="text-black text-center underline underline-offset-4 font-semibold"
-      >
-        Show more {{ category.name }} posts
-      </a>
-    </div>
-  </ng-container>
+    </ng-container>
+  </div>
 </div>
 
 <ng-template #emptyPost>

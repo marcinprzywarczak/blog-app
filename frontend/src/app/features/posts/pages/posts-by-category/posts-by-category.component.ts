@@ -5,11 +5,13 @@ import { Category } from '../../../../core/models/category';
 import { delay, finalize, Subscription } from 'rxjs';
 import { PostService } from '../../../../core/services/post.service';
 import { Post } from '../../../../core/models/post';
+import { DropDownAnimation } from '../../../../core/animations/dropdown-animation';
 
 @Component({
   selector: 'app-posts-by-category',
   templateUrl: './posts-by-category.component.html',
   styleUrls: ['./posts-by-category.component.scss'],
+  animations: [DropDownAnimation],
 })
 export class PostsByCategoryComponent implements OnInit, OnDestroy {
   categoryName: string;

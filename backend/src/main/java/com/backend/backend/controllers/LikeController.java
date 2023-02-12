@@ -1,5 +1,6 @@
 package com.backend.backend.controllers;
 
+import com.backend.backend.dto.PaginationDto;
 import com.backend.backend.models.Like;
 import com.backend.backend.models.Post;
 import com.backend.backend.models.User;
@@ -7,7 +8,11 @@ import com.backend.backend.payload.MessageResponse;
 import com.backend.backend.repositories.LikeRepository;
 import com.backend.backend.repositories.PostRepository;
 import com.backend.backend.repositories.UserRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -58,5 +63,14 @@ public class LikeController {
         this.likeRepository.save(newLike);
 
         return ResponseEntity.ok().body(new MessageResponse("Successfully liked post"));
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/user/likes")
+    public ResponseEntity<?> getUserLikedPosts(Authentication authentication, @RequestBody @Valid PaginationDto paginationDto){
+        User user = this.userRepository.findByEmail(authentication.getName());
+        int page = paginationDto.getFirst() / paginationDto.getRows();
+        Pageable pageable = PageRequest.of(page, paginationDto.getRows(), Sort.by("createdAt").descending());
+        return ResponseEntity.ok().body(this.likeRepository.findAllByUser(user, pageable));
     }
 }

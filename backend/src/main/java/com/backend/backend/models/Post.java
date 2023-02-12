@@ -70,7 +70,7 @@ public class Post {
     private Timestamp updatedAt;
 
     @OneToMany(mappedBy = "post")
-    @JsonManagedReference
+    @JsonBackReference
     private Set<Like> likes = new HashSet<>();
 
     public long getId() {

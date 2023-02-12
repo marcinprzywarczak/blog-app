@@ -5,6 +5,8 @@ import { UserPanelMainComponent } from './pages/user-panel-main/user-panel-main.
 import { UserPostsComponent } from './pages/user-posts/user-posts.component';
 import { UserAccountComponent } from './pages/user-account/user-account.component';
 import { EditPostComponent } from './pages/edit-post/edit-post.component';
+import { UserLikedPostsComponent } from './pages/user-liked-posts/user-liked-posts.component';
+import { UserFollowPostsComponent } from './pages/user-follow-posts/user-follow-posts.component';
 
 const routes: Routes = [
   {
@@ -15,6 +17,9 @@ const routes: Routes = [
       { path: 'addNewPost', component: AddNewPostComponent },
       { path: 'posts', component: UserPostsComponent },
       { path: 'account', component: UserAccountComponent },
+      { path: 'likes', component: UserLikedPostsComponent },
+      { path: 'follow', component: UserFollowPostsComponent },
+      { path: 'settings', component: UserFollowPostsComponent },
       { path: 'post/edit/:id', component: EditPostComponent },
     ],
   },
