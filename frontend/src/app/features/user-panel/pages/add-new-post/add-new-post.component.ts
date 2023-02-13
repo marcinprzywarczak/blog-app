@@ -46,7 +46,6 @@ export class AddNewPostComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.form);
     this.submitted = true;
     if (this.form.invalid || this.mainPhotoSrc === '') return;
     const formData = new FormData();

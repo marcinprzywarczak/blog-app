@@ -20,20 +20,17 @@ export class PostDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.postId = this.route.snapshot.params['id'];
-    console.log(this.postId);
     this.getPost();
   }
 
   getPost() {
     this.postService.getPost(this.postId).subscribe({
       next: (res) => {
-        console.log(res);
         this.post = res;
         this.post.content = this.post.content.replaceAll(
           'img',
           `img class='w-auto max-h-96' `
         );
-        console.log(this.post.content);
       },
       error: (err) => {},
     });

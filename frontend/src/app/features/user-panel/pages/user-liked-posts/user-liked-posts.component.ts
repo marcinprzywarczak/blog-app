@@ -24,7 +24,6 @@ export class UserLikedPostsComponent implements OnInit {
       next: (res) => {
         this.totalElements = res.totalElements;
         this.likes = res.content;
-        console.log(res);
         this.loading = false;
       },
       error: (err) => {},

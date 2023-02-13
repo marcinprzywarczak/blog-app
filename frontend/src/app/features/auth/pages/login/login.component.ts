@@ -46,7 +46,6 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('user', JSON.stringify(res));
           localStorage.setItem('isLogged', 'true');
           window.location.href = '/';
-          console.log('success', res);
         },
         error: (err) => {
           if (err.error.message) {

@@ -92,7 +92,6 @@ export class UserPostsComponent implements OnInit {
   }
 
   getPosts(event: LazyLoadEvent) {
-    console.log(event);
     this.loading = true;
     this.postService.getUserPosts(event).subscribe({
       next: (res) => {
@@ -129,9 +128,7 @@ export class UserPostsComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.updatePostActive(id);
-        console.log('accept');
       },
     });
-    console.log(id);
   }
 }

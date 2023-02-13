@@ -17,7 +17,5 @@ export class PostCardComponent {
   @Input() post: Post;
   faThumbs = faThumbsUp;
 
-  click() {
-    console.log('clicked');
-  }
+  click() {}
 }

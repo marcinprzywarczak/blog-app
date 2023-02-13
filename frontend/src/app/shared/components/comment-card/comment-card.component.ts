@@ -10,7 +10,5 @@ export class CommentCardComponent implements OnInit {
   @Input() comment: Comment;
   constructor() {}
 
-  ngOnInit() {
-    console.log(this.comment);
-  }
+  ngOnInit() {}
 }
