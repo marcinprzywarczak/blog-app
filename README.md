@@ -1,5 +1,5 @@
 # Live preview
-https://blog-app-96ffd.web.app/
+https://blog.marcin-przywarczak.com/
 
 # Description
 A web application with blog functionality. The application was developed using Spring Boot and MySQL on the backend side and Angular on the frontend side. Any user can browse and search other users posts. Once logged in, users can add new posts and manage their posts. Logged in users can like and comment on posts.
